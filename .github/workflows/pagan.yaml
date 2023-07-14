@@ -20,7 +20,7 @@ jobs:
       steps:
          - uses: actions/checkout@v3
          - id: foo
-           uses: cdsap/ge-experiment-runner@v1.2.1
+           uses: cdsap/ge-experiment-runner@main
            with:
              task: "${{ github.event.inputs.task }}"
              iterations: 5
@@ -34,7 +34,7 @@ jobs:
       steps:
          - uses: actions/checkout@v3
          - id: fooa
-           uses: cdsap/ge-experiment-report@v.1.2.1
+           uses: cdsap/ge-experiment-report@main
            with:
              task: "assembleDebug"
              experiment-id: ${{github.run_number}}
