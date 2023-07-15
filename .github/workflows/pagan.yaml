@@ -10,6 +10,9 @@ on:
         required: true 
       task: 
         required: true 
+      class: 
+        required: false
+  
 
 jobs:
     runners:
@@ -19,13 +22,14 @@ jobs:
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
-         - id: foo
+         - id: runner
            uses: cdsap/ge-experiment-runner@main
            with:
              task: "${{ github.event.inputs.task }}"
              iterations: 5
              experiment-id: ${{github.run_number}}
              variant: ${{ matrix.version }}
+             class: ${{ github.event.inputs.class }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
     report:
@@ -33,7 +37,7 @@ jobs:
       needs: [ runners]
       steps:
          - uses: actions/checkout@v3
-         - id: fooa
+         - id: report
            uses: cdsap/ge-experiment-report@main
            with:
              task: "${{ github.event.inputs.task }}"
