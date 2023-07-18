@@ -12,6 +12,8 @@ on:
         required: true 
       class: 
         required: false
+      iterations:
+        required: false
   
 
 jobs:
@@ -26,7 +28,7 @@ jobs:
            uses: cdsap/ge-experiment-runner@main
            with:
              task: "${{ github.event.inputs.task }}"
-             iterations: 5
+             iterations: ${{ github.event.inputs.iterations }}
              experiment-id: ${{github.run_number}}
              variant: ${{ matrix.version }}
              class: ${{ github.event.inputs.class }}
