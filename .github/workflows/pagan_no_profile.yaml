@@ -28,7 +28,7 @@ jobs:
             do  
                 values="$values,  $i"
             done
-            iterationsFormatted=$(values | tail -c+2)
+            iterationsFormatted=$values | tail -c+2
             echo "iterations=$iterationsFormatted" >> $GITHUB_OUTPUT
             echo $GITHUB_OUTPUT
       outputs:
