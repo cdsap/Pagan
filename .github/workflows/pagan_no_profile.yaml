@@ -21,7 +21,7 @@ jobs:
       name: Generate versions
       runs-on: ubuntu-latest
       steps:
-         - id: iterations
+         - id: calculate_iterations
            run: |
             iterations=""
             for i in {1..5}
@@ -31,7 +31,7 @@ jobs:
             iterations2=$(iterations | tail -c+2)
             echo "$iterations2"   >> $GITHUB_OUTPUT
       outputs:
-         matrix: ${{ steps.iterations.outputs.matrix }}
+         matrix: ${{ steps.calculate_iterations.outputs.matrix }}
     
     runners:
       needs: [iterations]
