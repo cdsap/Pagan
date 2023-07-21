@@ -28,7 +28,7 @@ jobs:
             do
               if [ $i == 1 ]
               then
-                iterations="\"$i\""
+                iterations="$iterations \"$i\""
               else
                 iterations="$iterations  , \"$i\""
               fi
