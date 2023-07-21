@@ -40,10 +40,13 @@ jobs:
     
     runners:
       needs: [iterations]
+      matrix:
+        variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
+        run: [ "${{ needs.iterations.outputs.iterations }}"] 
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
          - id: runner
            run: |
-            echo ${{ needs.iterations.outputs }}
-            echo ${{ needs.iterations.outputs.iterations }}
+            echo ${{ matrix.run }}
+            echo ${{ matrix.variant }}
