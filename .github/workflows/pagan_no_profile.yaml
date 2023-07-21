@@ -28,7 +28,7 @@ jobs:
             do  
                 iterations="$iterations,  $i"
             done
-            echo $iterations | tail -c+2% >> $GITHUB_OUTPUT
+            echo $iterations | tail -c+2 >> $GITHUB_OUTPUT
       outputs:
          matrix: ${{ steps.setup-iterations.outputs.matrix }}
     
