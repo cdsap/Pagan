@@ -28,14 +28,12 @@ jobs:
             do
               if [ $i == 1 ]
               then
-                iterations="$i"
+                iterations="\"$i\""
               else
-                iterations="$iterations  $i"
+                iterations="$iterations  , \"$i\""
               fi
             done
-            arr=($iterations)
-            echo $arr
-            echo "iterations=$arr" >> $GITHUB_OUTPUT
+            echo "iterations=$iterations" >> $GITHUB_OUTPUT
             echo $GITHUB_OUTPUT
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
@@ -45,7 +43,7 @@ jobs:
       strategy:
         matrix:
           variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
-          run:  ${{ needs.iterations.outputs.iterations }}
+          run:  [ "${{ needs.iterations.outputs.iterations }}" ]
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
