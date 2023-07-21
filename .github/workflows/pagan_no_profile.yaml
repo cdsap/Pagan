@@ -23,7 +23,7 @@ jobs:
       steps:
          - id: calculate_iterations
            run: |
-            iterations="{ iterations : ["
+            iterations=" ["
             for i in {1..${{ github.event.inputs.iterations }}}
             do
               if [ $i == 1 ]
@@ -33,7 +33,7 @@ jobs:
                 iterations="$iterations  , \"$i\""
               fi
             done
-            iterations="$iterations ]}"
+            iterations="$iterations ]"
             echo $iterations
             echo "iterations=$iterations" >> $GITHUB_OUTPUT
             echo $GITHUB_OUTPUT
@@ -45,12 +45,12 @@ jobs:
       strategy:
         matrix:
           variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
-          run:   ${{ fromJson(needs.iterations.outputs.iterations) }} 
+          runs:   ${{ fromJson(needs.iterations.outputs.iterations) }} 
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
          - id: runner
            run: |
             
-            echo ${{ matrix.run }}
+            echo ${{ matrix.runs }}
             echo ${{ matrix.variant }}
