@@ -1,0 +1,42 @@
+name: pagan
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        required: true
+      variantA:
+        required: true
+      variantB: 
+        required: true 
+      task: 
+        required: true 
+      class: 
+        required: false
+      iterations:
+        required: true
+  
+
+jobs:
+    iterations:
+      name: Generate versions
+      runs-on: ubuntu-latest
+      steps:
+        - id: setup-matrix
+         run: |
+           iterations=""
+           for i in {1..5}
+           do  
+               iterations="$iterations,  $i"
+           done
+           echo $iterations | tail -c+2% >> $GITHUB_OUTPUT
+      outputs:
+        matrix: ${{ steps.setup-matrix.outputs.matrix }}
+    
+    runners:
+      needs: [iterations]
+      runs-on: "ubuntu-latest"
+      steps:
+         - uses: actions/checkout@v3
+         - id: runner
+          run: |
+            echo ${{ needs.iterations.outputs.matrix }}
