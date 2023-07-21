@@ -1,4 +1,4 @@
-name: pagan
+name: pagan_no_profile
 on:
   workflow_dispatch:
     inputs:
