@@ -33,7 +33,8 @@ jobs:
                 iterations="$iterations,  $i"
               fi
             done
-            echo "iterations=$iterations" >> $GITHUB_OUTPUT
+            arr=$iterations
+            echo "iterations=$arr" >> $GITHUB_OUTPUT
             echo $GITHUB_OUTPUT
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
@@ -43,7 +44,7 @@ jobs:
       strategy:
         matrix:
           variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
-          run:  arr=(${{ needs.iterations.outputs.iterations }})"
+          run:  ${{ needs.iterations.outputs.iterations }}
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
