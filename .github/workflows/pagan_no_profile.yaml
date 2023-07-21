@@ -28,7 +28,8 @@ jobs:
             do  
                 values="$values,  $i"
             done
-            echo "iterations=$($values | tail -c+2)" >> $GITHUB_OUTPUT
+            iterationsFormatted=$(values | tail -c+2)
+            echo "iterations=$iterationsFormatted" >> $GITHUB_OUTPUT
             echo $GITHUB_OUTPUT
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
