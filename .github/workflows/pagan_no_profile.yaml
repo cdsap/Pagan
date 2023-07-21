@@ -23,14 +23,17 @@ jobs:
       steps:
          - id: calculate_iterations
            run: |
-            values=""
+            iterations=""
             for i in {1..5}
-            do  
-                values="$values,  $i"
+            do
+              if [ $i == 1 ]
+              then
+                iterations="$i"
+              else
+                iterations="$iterations,  $i"
+              fi
             done
-            iterationsFormatted=$values | tail -c+2
-            echo $iterationsFormatted
-            echo "iterations=$iterationsFormatted" >> $GITHUB_OUTPUT
+            echo "iterations=$iterations" >> $GITHUB_OUTPUT
             echo $GITHUB_OUTPUT
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
