@@ -30,10 +30,11 @@ jobs:
               then
                 iterations="$i"
               else
-                iterations="$iterations,  $i"
+                iterations="$iterations  $i"
               fi
             done
-            arr=$iterations
+            arr=($iterations)
+            echo $arr
             echo "iterations=$arr" >> $GITHUB_OUTPUT
             echo $GITHUB_OUTPUT
       outputs:
