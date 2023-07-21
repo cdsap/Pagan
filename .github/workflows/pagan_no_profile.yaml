@@ -31,7 +31,7 @@ jobs:
             iterations2=$(iterations | tail -c+2)
             echo "$iterations2"   >> $GITHUB_OUTPUT
       outputs:
-         matrix: ${{ steps.setup-iterations.outputs.matrix }}
+         matrix: ${{ steps.iterations.outputs.matrix }}
     
     runners:
       needs: [iterations]
