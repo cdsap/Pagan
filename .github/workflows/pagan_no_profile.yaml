@@ -23,15 +23,14 @@ jobs:
       steps:
          - id: calculate_iterations
            run: |
-            iterations=""
+            values=""
             for i in {1..5}
             do  
-                iterations="$iterations,  $i"
+                values="$values,  $i"
             done
-            iterations2=$(iterations | tail -c+2)
-            echo "$iterations2"   >> $GITHUB_OUTPUT
+            echo "iterations=$(values | tail -c+2)"   >> $GITHUB_OUTPUT
       outputs:
-         matrix: ${{ steps.calculate_iterations.outputs.matrix }}
+         matrix: ${{ steps.calculate_iterations.outputs.iterations }}
     
     runners:
       needs: [iterations]
@@ -40,4 +39,4 @@ jobs:
          - uses: actions/checkout@v3
          - id: runner
            run: |
-            echo ${{ needs.iterations.outputs.matrix }}
+            echo ${{ needs.iterations.outputs.iterations }}
