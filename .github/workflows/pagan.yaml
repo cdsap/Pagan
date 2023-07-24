@@ -48,5 +48,6 @@ jobs:
              project: "nowinandroid"
              api-key: ${{ secrets.GE_API_KEY }}
              url: ${{ secrets.GE_URL }}
+             profile: true
              gh_token: ${{secrets.GITHUB_TOKEN}}
              
