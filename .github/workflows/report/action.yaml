@@ -50,9 +50,11 @@ runs:
            do
               tagsParsed="$tagsParsed --tags=$val"
            done
-           profile="--profile"
+           profile=""
            if [ "${{ inputs.profile }}" == "true" ]
            then
+             profile="--profile"
+           else  
              profile=""
            fi             
            ./buildsComparison --url=${{ inputs.url }}  $profile --tasks=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed  --tags=experiment --tags=${{github.run_number}} --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
