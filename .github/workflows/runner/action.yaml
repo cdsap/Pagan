@@ -30,6 +30,7 @@ inputs:
     required: false
     default: 17
 runs:
+  runs-on: ubuntu-latest
   steps:
     - uses: actions/checkout@v3
       with:
