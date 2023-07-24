@@ -69,7 +69,6 @@ jobs:
       needs: [ execution]
       steps:
          - uses: actions/checkout@v3
-         - id: report
          - uses: ./.github/workflows/report
            with:
              task: "${{ github.event.inputs.task }}"
