@@ -1,0 +1,66 @@
+name: 'GE Experiment Report'
+description: 'Experiment Report'
+inputs:
+  api-key:
+    description: ""
+    required: true
+  url:
+    description: ""
+    required: true
+    default: "https://ge.solutions-team.gradle.com"
+  task:
+    description: ""
+    requierd: true
+  max-builds:
+    description: ""
+    required: false
+    default: 500
+  experiment-id:
+    description: ""
+    required: true
+  tags:
+    description: ""
+    required: true
+  project:
+    description: ""
+    required: true
+  gh_token:
+    description: ""
+    required: true  
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        distribution: zulu
+        java-version: 11.0.4
+    - name: Execute Gradle build
+      id : geapix
+      run: |
+           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.1.13/buildsComparison --output buildsComparison
+           chmod 0757 buildsComparison
+           #process tags
+           tags="${{ inputs.tags }}"
+           arrayTags=(${tags//,/ })
+           tagsParsed=""
+           variants=""
+           for val in "${arrayTags[@]}";
+           do
+              tagsParsed="$tagsParsed --tags=$val"
+           done
+           profile="--profile"
+           if [ "${{ inputs.profile }}" ]
+           then
+             profile=""
+           fi             
+           ./buildsComparison --url=${{ inputs.url }}  $profile --tasks=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed  --tags=experiment --tags=${{github.run_number}} --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
+           CONTENT=$(cat results_experiment)
+           echo "$CONTENT" >> $GITHUB_STEP_SUMMARY
+      shell: bash
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        path: results_experiment
+        if-no-files-found: error

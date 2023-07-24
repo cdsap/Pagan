@@ -49,9 +49,3 @@ runs:
       shell: bash           
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
-    - name: Archive production artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: profiler-${{inputs.variant}}
-        path: |
-          profile-out/*
