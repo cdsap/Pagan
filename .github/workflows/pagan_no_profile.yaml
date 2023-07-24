@@ -4,15 +4,20 @@ on:
     inputs:
       repository:
         required: true
+        default: "cdsap/K2nowinandroid"
       variantA:
         required: true
+        default: "main"
       variantB: 
-        required: true 
+        required: true
+        default: "kotlin_1_9" 
       task: 
+        default: ":help"
         required: true 
       class: 
         required: false
       iterations:
+        default: 1
         required: true
   
 
