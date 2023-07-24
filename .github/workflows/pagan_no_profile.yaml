@@ -39,23 +39,8 @@ jobs:
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
     
-    runners:
-      needs: [iterations]
-      strategy:
-        matrix:
-          variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
-          runs:   ${{ fromJson(needs.iterations.outputs.iterations) }} 
-      runs-on: "ubuntu-latest"
-      steps:
-         - uses: actions/checkout@v3
-         - id: runner
-           run: |
-            
-            echo ${{ matrix.runs }}
-            echo ${{ matrix.variant }}
-
     execution:
-      needs: [runners]
+      needs: [iterations]
       strategy:
         matrix:
           variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
