@@ -63,3 +63,4 @@ jobs:
              class: ${{ github.event.inputs.class }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
+         - uses: actions/checkout@v3     
