@@ -62,7 +62,7 @@ jobs:
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
-         - uses: .github/actions/workflows/runner_no_profile.yaml
+         - uses: ./.github/workflows/runner_no_profile.yaml
            with:
              task: "${{ github.event.inputs.task }}"
              iterations: ${{ github.event.inputs.iterations }}
