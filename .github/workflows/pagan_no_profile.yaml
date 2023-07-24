@@ -58,7 +58,7 @@ jobs:
              task: "${{ github.event.inputs.task }}"
              iterations: ${{ github.event.inputs.iterations }}
              experiment-id: ${{github.run_number}}
-             variant: ${{ matrix.version }}
+             variant: ${{ matrix.variant }}
              runs: ${{ matrix.runs }}
              class: ${{ github.event.inputs.class }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
