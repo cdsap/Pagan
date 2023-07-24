@@ -58,7 +58,8 @@ jobs:
       needs: [runners]
       strategy:
         matrix:
-          version: ["${{ github.event.inputs.variantA }}"]
+          variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
+          runs:   ${{ fromJson(needs.iterations.outputs.iterations) }} 
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
@@ -68,6 +69,7 @@ jobs:
              iterations: ${{ github.event.inputs.iterations }}
              experiment-id: ${{github.run_number}}
              variant: ${{ matrix.version }}
+             runs: ${{ matrix.runs }}
              class: ${{ github.event.inputs.class }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
