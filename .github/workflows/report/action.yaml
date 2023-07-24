@@ -51,7 +51,7 @@ runs:
               tagsParsed="$tagsParsed --tags=$val"
            done
            profile="--profile"
-           if [ "${{ inputs.profile }}" ]
+           if [ "${{ inputs.profile }}" == "true" ]
            then
              profile=""
            fi             
