@@ -48,7 +48,6 @@ jobs:
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
-         - id: run
          - uses: ./.github/workflows/runner
            with:
              task: "${{ github.event.inputs.task }}"
