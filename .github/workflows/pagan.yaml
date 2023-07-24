@@ -40,7 +40,6 @@ jobs:
       steps:
          - uses: actions/checkout@v3
          - uses: ./.github/workflows/report
-           uses: cdsap/ge-experiment-report@main
            with:
              task: "${{ github.event.inputs.task }}"
              experiment-id: ${{github.run_number}}
