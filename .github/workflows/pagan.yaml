@@ -49,3 +49,5 @@ jobs:
              api-key: ${{ secrets.GE_API_KEY }}
              url: ${{ secrets.GE_URL }}
              gh_token: ${{secrets.GITHUB_TOKEN}}
+       - uses: actions/checkout@v3
+               
