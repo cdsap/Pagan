@@ -24,7 +24,6 @@ jobs:
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
-         - id: runner
          - uses: ./.github/workflows/runner-gradle-profiler
            with:
              task: "${{ github.event.inputs.task }}"
@@ -39,7 +38,6 @@ jobs:
       runs-on: "ubuntu-latest"
       needs: [ runners]
       steps:
-         - id: report
          - uses: actions/checkout@v3
          - uses: ./.github/workflows/report
            uses: cdsap/ge-experiment-report@main
