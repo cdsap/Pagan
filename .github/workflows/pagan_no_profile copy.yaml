@@ -53,22 +53,3 @@ jobs:
             
             echo ${{ matrix.runs }}
             echo ${{ matrix.variant }}
-
-    execution:
-      needs: [runners]
-      strategy:
-        matrix:
-          version: ["${{ github.event.inputs.variantA }}"]
-      runs-on: "ubuntu-latest"
-      steps:
-         - uses: actions/checkout@v3
-         - id: runner
-           uses: cdsap/ge-experiment-runner@main
-           with:
-             task: "${{ github.event.inputs.task }}"
-             iterations: ${{ github.event.inputs.iterations }}
-             experiment-id: ${{github.run_number}}
-             variant: ${{ matrix.version }}
-             class: ${{ github.event.inputs.class }}
-             api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-             repository: ${{ github.event.inputs.repository }}
