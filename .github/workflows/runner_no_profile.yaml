@@ -1,0 +1,49 @@
+name: 'GE Experiment Runner'
+description: 'Exexutes with Gradle Profiler a scenario defined'
+inputs:
+  task:
+    description: ""
+    required: true
+  warmups:
+    description: "Number of build warmups"
+    required: false
+    default: 1
+  iterations:
+    description: "Number of iterations"
+    required: false
+    default: 5
+  class:
+    description: "Class to apply the abi change"
+    required: false
+  variant:
+    description: "variant of the experiment, represents the branch"
+    required: true
+  experiment-id:
+    description: ""
+    required: true
+  api-key:
+    description: ""
+    required: true
+  repository:
+    required: true
+  jdk:
+    required: false
+    default: 17
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.variant }}
+    - uses: actions/setup-java@v3
+      with:
+        distribution: zulu
+        java-version: ${{ inputs.jdk }}
+    - name: Execute Gradle build
+      id : geapix
+      run: |
+           ./gradlew clean ${{ inputs.task }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
+      env:
+        GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
+

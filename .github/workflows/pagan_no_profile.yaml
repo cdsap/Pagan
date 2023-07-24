@@ -62,8 +62,7 @@ jobs:
       runs-on: "ubuntu-latest"
       steps:
          - uses: actions/checkout@v3
-         - id: runner
-           uses: cdsap/ge-experiment-runner@main
+         - uses: ./.github/actions/runner_no_profile
            with:
              task: "${{ github.event.inputs.task }}"
              iterations: ${{ github.event.inputs.iterations }}
