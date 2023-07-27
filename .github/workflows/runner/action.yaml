@@ -31,6 +31,11 @@ inputs:
   jdk:
     required: false
     default: 17
+  cache_node_private_key_id:
+    required: false
+  cache_node_private_key:
+    required: false
+
 runs:
   using: 'composite'
   steps:
@@ -47,9 +52,9 @@ runs:
       run: |
            ## replace cache node if is required credentials
            if [ -f "cache_node.json" ]; then
-              JSON_private_key_id=$(jq '.private_key_id = "${{secrets.CACHE_NODE_PRIVATE_KEY_ID}}"' cache-node.json)
+              JSON_private_key_id=$(jq '.private_key_id = "${{ inputs.cache_node_private_key_id }}"' cache-node.json)
               echo "$JSON_private_key_id" > cache-node.json
-              JSON_private_key=$(jq '.private_key = "${{secrets.CACHE_NODE_PRIVATE_KEY}}"' cache-node.json)
+              JSON_private_key=$(jq '.private_key = "${{ inputs.cache_node_private_key }}"' cache-node.json)
               echo "$JSON_private_key" > cache-node.json
            fi
            ./gradlew ${{ inputs.task }}  -Dscan.tag.${{ inputs.runs }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
