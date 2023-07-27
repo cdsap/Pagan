@@ -52,6 +52,7 @@ runs:
       run: |
            ## replace cache node if is required credentials
            if [ -f "cache_node.json" ]; then
+               echo "1233"
               '${{ inputs.cache_node_private_key_id }}' | base64 --decode | jq > cache_node.json
            fi
            ./gradlew ${{ inputs.task }}  -Dscan.tag.${{ inputs.runs }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
