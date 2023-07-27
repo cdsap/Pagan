@@ -45,6 +45,13 @@ runs:
     - name: Execute Gradle build
       id : geapix
       run: |
+           ## replace cache node if is required credentials
+           if [ -f "cache_node.json" ]; then
+              JSON_private_key_id=$(jq '.private_key_id = "${{secrets.CACHE_NODE_PRIVATE_KEY_ID}}"' cache-node.json)
+              echo "$JSON_private_key_id" > cache-node.json
+              JSON_private_key=$(jq '.private_key = "${{secrets.CACHE_NODE_PRIVATE_KEY}}"' cache-node.json)
+              echo "$JSON_private_key" > cache-node.json
+           fi
            ./gradlew ${{ inputs.task }}  -Dscan.tag.${{ inputs.runs }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
       shell: bash           
       env:
