@@ -63,8 +63,6 @@ jobs:
              class: ${{ github.event.inputs.class }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
-             cache_node_private_key_id:  ${{ secrets.JSON }}
-             cache_node_private_key:  ${{ secrets.CACHE_NODE_PRIVATE_KEY }}
          - uses: actions/checkout@v3
     report:
       runs-on: "ubuntu-latest"
