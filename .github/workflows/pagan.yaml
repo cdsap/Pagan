@@ -15,7 +15,7 @@ on:
       iterations:
         required: false
   
-run-name: "${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}"
+run-name: "profile-${{ github.event.inputs.repository }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
 
 jobs:
     runners:
