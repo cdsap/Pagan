@@ -1,4 +1,4 @@
-name: pagan_no_profile
+name: pagan_no_profile-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantA }}
 on:
   workflow_dispatch:
     inputs:
