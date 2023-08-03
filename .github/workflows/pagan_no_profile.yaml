@@ -21,7 +21,7 @@ on:
         default: 1
         required: true
   
-run-name: "${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantA }}"
+run-name: "${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}"
 
 jobs:
     iterations:
