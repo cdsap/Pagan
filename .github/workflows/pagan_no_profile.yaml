@@ -1,5 +1,4 @@
 name: pagan_no_profile
-sub-name: ${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantA }}
 
 on:
   workflow_dispatch:
@@ -22,6 +21,7 @@ on:
         default: 1
         required: true
   
+sub-name: "${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantA }}"
 
 jobs:
     iterations:
