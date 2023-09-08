@@ -41,7 +41,7 @@ runs:
         ref: ${{ inputs.variant }}
     - uses: actions/setup-java@v3
       with:
-        distribution: zulu
+        distribution: oracle
         java-version: ${{ inputs.jdk }}
     - name: Execute Gradle build
       id : geapix
