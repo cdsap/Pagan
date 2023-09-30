@@ -14,7 +14,7 @@ inputs:
   max-builds:
     description: ""
     required: false
-    default: 500
+    default: 200
   experiment-id:
     description: ""
     required: true
@@ -27,6 +27,15 @@ inputs:
   gh_token:
     description: ""
     required: true  
+  taskpathreport:
+    description: "Include Task path reports"
+    required: true
+  processreport:
+    description: "Include Process reports"
+    required: true
+  kotlinreport:
+    description: "Include Kotlin Build reports"
+    required: true
 
 runs:
   using: 'composite'
@@ -39,7 +48,7 @@ runs:
     - name: Execute Gradle build
       id : geapix
       run: |
-           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.1.15/buildsComparison --output buildsComparison
+           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.2.0/buildsComparison --output buildsComparison
            chmod 0757 buildsComparison
            #process tags
            tags="${{ inputs.tags }}"
@@ -48,7 +57,7 @@ runs:
            variants=""
            for val in "${arrayTags[@]}";
            do
-              tagsParsed="$tagsParsed --tags=$val"
+              tagsParsed="$tagsParsed --variants=$val"
            done
            profile=""
            if [ "${{ inputs.profile }}" == "true" ]
@@ -56,13 +65,30 @@ runs:
              profile="--profile"
            else  
              profile=""
-           fi             
-           ./buildsComparison --url=${{ inputs.url }}  $profile --tasks=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed  --tags=experiment --tags=${{github.run_number}} --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
+           fi
+           taskpathreport=""
+           if [ "${{ inputs.taskpathreport }}" == "false" ]
+           then
+             taskpathreport="--no-task-path-report"
+           fi
+           processreport=""
+           if [ "${{ inputs.processreport }}" == "false" ]
+           then
+             processreport="--no-process-report"
+           fi
+           kotlinreport=""
+           if [ "${{ inputs.kotlinreport }}" == "false" ]
+           then
+             kotlinreport="--no-kotlin-build-report"
+           fi 
+          ./buildsComparison --url=${{ inputs.url }} $taskpathreport $processreport $profile $kotlinreport --tasks=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed  --tags=experiment --tags=${{github.run_number}} --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
            CONTENT=$(cat results_experiment)
            echo "$CONTENT" >> $GITHUB_STEP_SUMMARY
       shell: bash
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
       with:
-        path: results_experiment
+        path: |
+          results_experiment
+          build_comparison.csv
         if-no-files-found: error

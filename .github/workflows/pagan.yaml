@@ -14,6 +14,27 @@ on:
         required: false
       iterations:
         required: false
+      taskpathreport: "Task path report"
+        type: choice
+        required: true
+        default: 'true'
+        options:
+           - true
+           - false
+      processreport: "Process report"
+        type: choice
+        required: true
+        default: 'true'
+        options:
+           - true
+           - false
+      kotlinreport: "Kotlin build report"
+        type: choice
+        required: true
+        default: 'true'
+        options:
+           - true
+           - false
   
 run-name: "profile-${{ github.event.inputs.repository }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
 
@@ -50,5 +71,8 @@ jobs:
              url: ${{ secrets.GE_URL }}
              profile: true
              gh_token: ${{secrets.GITHUB_TOKEN}}
+             taskpathreport: ${{ github.event.inputs.taskpathreport }}
+             processreport: ${{ github.event.inputs.processreport }}
+             kotlinreport: ${{ github.event.inputs.kotlinreport }}
          - uses: actions/checkout@v3             
              
