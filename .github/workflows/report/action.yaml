@@ -50,7 +50,7 @@ runs:
     - name: Execute Gradle build
       id : geapix
       run: |
-           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.2.1/buildsComparison --output buildsComparison
+           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.2.2/buildsComparison --output buildsComparison
            chmod 0757 buildsComparison
            #process tags
            tags="${{ inputs.tags }}"
