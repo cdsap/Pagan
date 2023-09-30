@@ -81,7 +81,7 @@ runs:
            then
              kotlinreport="--no-kotlin-build-report"
            fi 
-          ./buildsComparison --url=${{ inputs.url }} $taskpathreport $processreport $profile $kotlinreport --tasks=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed  --tags=experiment --tags=${{github.run_number}} --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
+           ./buildsComparison --url=${{ inputs.url }} $taskpathreport $processreport $profile $kotlinreport --tasks=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed  --tags=experiment --tags=${{github.run_number}} --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
            CONTENT=$(cat results_experiment)
            echo "$CONTENT" >> $GITHUB_STEP_SUMMARY
       shell: bash

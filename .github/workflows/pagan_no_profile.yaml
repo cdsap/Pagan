@@ -20,27 +20,27 @@ on:
       iterations:
         default: 1
         required: true
-      taskpathreport: "Task path report"
+      taskpathreport:
         type: choice
         required: true
         default: 'true'
         options:
-           - true
-           - false
-      processreport: "Process report"
+          - true
+          - false
+      processreport:
         type: choice
         required: true
         default: 'true'
         options:
-           - true
-           - false
-      kotlinreport: "Kotlin build report"
+          - true
+          - false
+      kotlinreport:
         type: choice
         required: true
         default: 'true'
         options:
-           - true
-           - false
+          - true
+          - false
   
 
 run-name: "${{ github.event.inputs.repository }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
