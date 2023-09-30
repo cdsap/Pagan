@@ -50,14 +50,10 @@ runs:
     - name: Execute Gradle build
       id : geapix
       run: |
-           println "1"
            curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.2.0/buildsComparison --output buildsComparison
-           println "2"
            chmod 0757 buildsComparison
-           println "3"
            #process tags
            tags="${{ inputs.tags }}"
-           println "4"
            arrayTags=(${tags//,/ })
            tagsParsed=""
            variants=""

@@ -5,15 +5,15 @@ on:
     inputs:
       repository:
         required: true
-        default: "cdsap/K2nowinandroid"
+        default: "cdsap/KspVsKapt"
       variantA:
         required: true
-        default: "main"
+        default: "lint-4-1-different-process"
       variantB: 
         required: true
-        default: "kotlin_1_9" 
+        default: "lint-2-1-different-process" 
       task: 
-        default: ":help"
+        default: "lintDemoRelease"
         required: true 
       class: 
         required: false
@@ -40,7 +40,7 @@ on:
         default: 'true'
         options:
           - true
-          - false
+          - falsex
   
 
 run-name: "${{ github.event.inputs.repository }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
