@@ -24,6 +24,8 @@ inputs:
   project:
     description: ""
     required: true
+  profile:
+    required: true
   gh_token:
     description: ""
     required: true  
