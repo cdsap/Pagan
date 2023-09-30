@@ -68,6 +68,8 @@ runs:
            else  
              profile=""
            fi
+           echo "1"
+           echo $tagsParsed
            taskpathreport=""
            if [ "${{ inputs.taskpathreport }}" == "false" ]
            then
