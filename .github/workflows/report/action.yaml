@@ -50,7 +50,7 @@ runs:
     - name: Execute Gradle build
       id : geapix
       run: |
-           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.2.0/buildsComparison --output buildsComparison
+           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.2.1/buildsComparison --output buildsComparison
            chmod 0757 buildsComparison
            #process tags
            tags="${{ inputs.tags }}"
@@ -93,6 +93,7 @@ runs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
       with:
+        name: build-comparison-reports
         path: |
           results_experiment
           build_comparison.csv

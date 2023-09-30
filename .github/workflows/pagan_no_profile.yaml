@@ -40,7 +40,7 @@ on:
         default: 'true'
         options:
           - true
-          - falsex
+          - false
   
 
 run-name: "${{ github.event.inputs.repository }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
