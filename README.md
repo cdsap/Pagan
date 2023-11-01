@@ -83,3 +83,7 @@ Provides detailed metrics of the Kotlin compiler for each variant
 ![Kotlin Build Reports](resources/kotlin_build_reports.png)
 
 
+## Why the name Pagan?
+The name of the repository is not related to religion, Pagan is the old Burmese transcription for Bagan.
+And Bagan also the name of old project I used to experiment with Gradle builds:
+https://github.com/cdsap/Bagan
