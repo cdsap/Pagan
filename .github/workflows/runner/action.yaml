@@ -1,5 +1,5 @@
 name: 'GE Experiment Runner'
-description: 'Exexutes with Gradle Profiler a scenario defined'
+description: 'Executes with Gradle Profiler a scenario defined'
 inputs:
   task:
     description: ""
@@ -47,6 +47,6 @@ runs:
       id : geapix
       run: |
            ./gradlew ${{ inputs.task }}  -Dscan.tag.${{ inputs.runs }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
-      shell: bash           
+      shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}

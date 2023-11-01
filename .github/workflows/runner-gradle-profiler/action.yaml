@@ -1,5 +1,5 @@
-name: 'GE Experiment Runner'
-description: 'Exexutes with Gradle Profiler a scenario defined'
+name: 'GE Experiment Runner with Gradle Profiler'
+description: 'Executes with Gradle Profiler a scenario defined'
 inputs:
   task:
     description: ""
@@ -48,9 +48,9 @@ runs:
     - name: Execute Gradle build
       id : geapix
       run: |
-           
+
            unzip  ${{ steps.sdkman.outputs.file }}
-           if [ -z "${{ inputs.class }}" ] 
+           if [ -z "${{ inputs.class }}" ]
            then
                echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = ["-Dscan.tag.${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
            else
@@ -58,7 +58,7 @@ runs:
            fi
 
            gradle-profiler-0.19.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
- 
+
 
            TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"
            while read line
