@@ -1,32 +1,16 @@
-name: 'GE Experiment Runner'
-description: 'Executes with Gradle Profiler a scenario defined'
+name: 'Experiment runner'
 inputs:
   task:
-    description: ""
     required: true
-  warmups:
-    description: "Number of build warmups"
-    required: false
-    default: 1
-  iterations:
-    description: "Number of iterations"
-    required: false
-    default: 5
-  class:
-    description: "Class to apply the abi change"
-    required: false
   variant:
-    description: "variant of the experiment, represents the branch"
     required: true
   experiment-id:
-    description: ""
     required: true
   api-key:
-    description: ""
     required: true
   repository:
     required: true
-  runs:
+  run-id:
     required: true
   jdk:
     required: false
@@ -44,9 +28,9 @@ runs:
         distribution: oracle
         java-version: ${{ inputs.jdk }}
     - name: Execute Gradle build
-      id : geapix
+      id : gradle-build
       run: |
-           ./gradlew ${{ inputs.task }}  -Dscan.tag.${{ inputs.runs }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
+           ./gradlew ${{ inputs.task }}  -Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}

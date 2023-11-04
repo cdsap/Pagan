@@ -1,42 +1,27 @@
-name: 'GE Experiment Report'
-description: 'Experiment Report'
+name: 'Experiment Report'
 inputs:
   api-key:
-    description: ""
     required: true
   url:
-    description: ""
     required: true
-    default: "https://ge.solutions-team.gradle.com"
   task:
-    description: ""
-    requierd: true
+    required: true
   max-builds:
-    description: ""
     required: false
     default: 200
   experiment-id:
-    description: ""
     required: true
   tags:
-    description: ""
-    required: true
-  project:
-    description: ""
     required: true
   profile:
     required: true
   gh_token:
-    description: ""
-    required: true  
+    required: true
   taskpathreport:
-    description: "Include Task path reports"
     required: true
   processreport:
-    description: "Include Process reports"
     required: true
   kotlinreport:
-    description: "Include Kotlin Build reports"
     required: true
 
 runs:
@@ -47,8 +32,8 @@ runs:
       with:
         distribution: zulu
         java-version: 11.0.4
-    - name: Execute Gradle build
-      id : geapix
+    - name: Execute CompareGEBuilds
+      id : compareBuilds
       run: |
            curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v.0.2.2/buildsComparison --output buildsComparison
            chmod 0757 buildsComparison
@@ -65,11 +50,9 @@ runs:
            if [ "${{ inputs.profile }}" == "true" ]
            then
              profile="--profile"
-           else  
+           else
              profile=""
            fi
-           echo "1"
-           echo $tagsParsed
            taskpathreport=""
            if [ "${{ inputs.taskpathreport }}" == "false" ]
            then
@@ -84,7 +67,7 @@ runs:
            if [ "${{ inputs.kotlinreport }}" == "false" ]
            then
              kotlinreport="--no-kotlin-build-report"
-           fi 
+           fi
            ./buildsComparison --url=${{ inputs.url }} $taskpathreport $processreport $kotlinreport $profile --tasks=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
            CONTENT=$(cat results_experiment)
            echo "$CONTENT" >> $GITHUB_STEP_SUMMARY

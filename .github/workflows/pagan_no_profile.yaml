@@ -1,4 +1,4 @@
-name: pagan_no_profile
+name: Experiment
 
 on:
   workflow_dispatch:
@@ -15,12 +15,11 @@ on:
       task:
         default: "lintDemoRelease"
         required: true
-      class:
-        required: false
       iterations:
         default: 1
         required: true
       taskpathreport:
+        description: "Include experiment results by task path"
         type: choice
         required: true
         default: 'true'
@@ -28,6 +27,7 @@ on:
           - true
           - false
       processreport:
+        description: "Include Gradle/Kotlin process in the experiment results"
         type: choice
         required: true
         default: 'true'
@@ -35,6 +35,7 @@ on:
           - true
           - false
       kotlinreport:
+        description: "Include Kotlin Build reports in the experiment results"
         type: choice
         required: true
         default: 'true'
@@ -80,11 +81,9 @@ jobs:
          - uses: ./.github/workflows/runner
            with:
              task: "${{ github.event.inputs.task }}"
-             iterations: ${{ github.event.inputs.iterations }}
              experiment-id: "no-profile-${{github.run_number}}"
              variant: ${{ matrix.variant }}
-             runs: ${{ matrix.runs }}
-             class: ${{ github.event.inputs.class }}
+             run-id: ${{ matrix.runs }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
          - uses: actions/checkout@v3
@@ -98,7 +97,6 @@ jobs:
              task: "${{ github.event.inputs.task }}"
              experiment-id: "no-profile-${{github.run_number}}"
              tags: "${{ github.event.inputs.variantA }},${{ github.event.inputs.variantB }}"
-             project: "nowinandroid"
              api-key: ${{ secrets.GE_API_KEY }}
              url: ${{ secrets.GE_URL }}
              gh_token: ${{secrets.GITHUB_TOKEN}}
