@@ -5,9 +5,11 @@ Sample showing how to build a functional Experimentation Framework on GitHub Act
 ## How works
 The repository contains `workflow_dispatch` actions that orchestrate the execution, data extraction and publication of the
 results of the experiments.
-<img src="resources/pagan.png" width=50% height=50%>
 
-The experiment is composed by two variants represented by the branch name. Given a requested task, Telltale will
+<img alt="Summary" src="resources/dispatcher.png" width="200"/>
+
+
+The experiment is composed by two variants represented by a branch name. Given a requested task, Telltale will
 execute for each variant the type of experiment with N iterations. When all the builds are finsihed it
 will extract the results of the experiment and will report a summary:
 
@@ -15,31 +17,32 @@ will extract the results of the experiment and will report a summary:
 
 ## Types of experiment
 Telltale supports two type of experiments:
-* Experiments running with Gradle Profiler
-* Experiments without Gradle Profiler
+* Default Experiments
+* Experiments with Gradle Profiler
 
-### Experiments with Gradle Profiler
+### Default Experiments
 `experiment.yaml`
 
-Each variant is executed with the action `.github/workflows/runner-gradle-profiler`.
-We can include a list of classes where we want to apply `abi-changes` scenario in the Gradle Profiler execution.
-We create two different runs, representing each variant, executing N times the requested build. The default warmpups of this
-experiment is 2.
+Each variant is executed with the action  `.github/workflows/runner`. Based on the number of iterations, it will create N
+runners for each variant. For instance, for a experiment
+with 8 iterations, it will create 16 jobs:
+![Pagan no profile](resources/experiment.png)
 
-### Experiments without Gradle Profiler
+
+### Experiments with Gradle Profiler
 `experiment-with-gradle-profiler.yaml`
 
-Each variant is executed with the action  `.github/workflows/runner`. Based on the number of iterations, it will create N
-runners for each variant. The build executed will the requested task included in the experiment. For instance, for a experiment
-with 50 iterations, it will create 100 jobs:
-![Pagan no profile](resources/pagan_no_profile.png)
+Each variant is executed with the action `.github/workflows/runner-gradle-profiler`.
+We can include a list of classes to apply `abi-changes` scenario in the Gradle Profiler execution.
+We create two different runs, representing each variant, executing N times the requested build. The default warmpups of this
+experiment is 2.
 
 ## Extracting and Publishing results
 Once both variants have executed all the jobs, Telltale will execute `.github/workflows/runner`.
 This action, uses the CLI [CompareGEBuilds](https://github.com/cdsap/CompareGEBuilds) that retrieves and aggregates the data
 for both variants:
 ```
-./buildsComparison --experiment-id 154 --variants lint-4-1 --variants lint-2-1 \
+./buildsComparison --experiment-id profile-154 --variants lint-4-1 --variants lint-2-1 \
     --requested-task lintDemoRelease --api-key $GE_API \
     --url $GE_URL
 ```
@@ -82,4 +85,6 @@ Provides detailed metrics of the Kotlin compiler for each variant
   * Requires https://blog.jetbrains.com/kotlin/2022/06/introducing-kotlin-build-reports/
 
 ![Kotlin Build Reports](resources/kotlin_build_reports.png)
+
+## Notes
 
