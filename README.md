@@ -1,32 +1,33 @@
-## Pagan
+## Telltale
 Sample showing how to build a functional Experimentation Framework on GitHub Actions for Gradle-Based Builds connected to Develocity.
+
 
 ## How works
 The repository contains `workflow_dispatch` actions that orchestrate the execution, data extraction and publication of the
 results of the experiments.
 <img src="resources/pagan.png" width=50% height=50%>
 
-The experiment is composed by two variants represented by the branch name. Given a requested task, Pagan will
+The experiment is composed by two variants represented by the branch name. Given a requested task, Telltale will
 execute for each variant the type of experiment with N iterations. When all the builds are finsihed it
 will extract the results of the experiment and will report a summary:
 
 ![Summary](resources/summary.png)
 
 ## Types of experiment
-Pagan supports two type of experiments:
+Telltale supports two type of experiments:
 * Experiments running with Gradle Profiler
 * Experiments without Gradle Profiler
 
 ### Experiments with Gradle Profiler
-`pagan.yaml`
+`experiment.yaml`
 
 Each variant is executed with the action `.github/workflows/runner-gradle-profiler`.
 We can include a list of classes where we want to apply `abi-changes` scenario in the Gradle Profiler execution.
-We create two different runs, represeing each variant, executing N times the requested build. The default warmpups of this
+We create two different runs, representing each variant, executing N times the requested build. The default warmpups of this
 experiment is 2.
 
 ### Experiments without Gradle Profiler
-`pagan_no_profile.yaml`
+`experiment-with-gradle-profiler.yaml`
 
 Each variant is executed with the action  `.github/workflows/runner`. Based on the number of iterations, it will create N
 runners for each variant. The build executed will the requested task included in the experiment. For instance, for a experiment
@@ -34,7 +35,7 @@ with 50 iterations, it will create 100 jobs:
 ![Pagan no profile](resources/pagan_no_profile.png)
 
 ## Extracting and Publishing results
-Once both variants have executed all the jobs, Pagan will execute `.github/workflows/runner`.
+Once both variants have executed all the jobs, Telltale will execute `.github/workflows/runner`.
 This action, uses the CLI [CompareGEBuilds](https://github.com/cdsap/CompareGEBuilds) that retrieves and aggregates the data
 for both variants:
 ```
@@ -59,7 +60,7 @@ Task Type,com.android.build.gradle.tasks.ProcessLibraryManifest,28,16,ms,18,11,m
 ...
 ```
 ## Metrics
-Pagan provides a report of the variants under experimentation based on the Develocity API information of the builds:
+Telltale provides a report of the variants under experimentation based on the Develocity API information of the builds:
 * Build duration
 * Duration grouped by Task Type
 * Duration by Task Path
@@ -82,8 +83,3 @@ Provides detailed metrics of the Kotlin compiler for each variant
 
 ![Kotlin Build Reports](resources/kotlin_build_reports.png)
 
-
-## Why the name Pagan?
-The name of the repository is not related to religion, Pagan is the old Burmese transcription for Bagan.
-And Bagan also the name of old project I used to experiment with Gradle builds:
-https://github.com/cdsap/Bagan
