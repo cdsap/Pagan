@@ -87,4 +87,16 @@ Provides detailed metrics of the Kotlin compiler for each variant
 ![Kotlin Build Reports](resources/kotlin_build_reports.png)
 
 ## Notes
+* The repository under experiment must apply the GE plugin
+* After forking the repository you need to define the secrets:
+  * GE_URL: Develocty URL instance
+  * GRADLE_ENTERPRISE_ACCESS_KEY: Access key required to publish Build scans
+  * GE_API_KEY: Token required to retrieve GE API data
+* The summary of task path/type metrics provides data of cacheable tasks. If you require a report of the different tasks independent of the cacheable state you can generate it with
+  the CLI [TaskReport](https://github.com/cdsap/TaskReport):
+```
+./taskreport --api-key=$GE_API_KEY --url=$GE_URL --max-builds=200 --project=nowinandroid --requested-task=:core:network:packageDemoDebugAssets  \N
+             --tags=profile-175_variant_experiment_big_experiment_executed_no_cache
+
+```
 
