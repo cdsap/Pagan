@@ -92,7 +92,7 @@ Provides detailed metrics of the Kotlin compiler for each variant
   * GE_URL: Develocty URL instance
   * GRADLE_ENTERPRISE_ACCESS_KEY: Access key required to publish Build scans
   * GE_API_KEY: Token required to retrieve GE API data
-* The summary of task path/type metrics provides data of cacheable tasks. If you require a report of the different tasks independent of the cacheable state you can generate it with
+* The summary of task path/type metrics provides data of cacheable tasks. If you require a complete report of the tasks independent of the cacheable state you can generate it with
   the CLI [TaskReport](https://github.com/cdsap/TaskReport):
 ```
 ./taskreport --api-key=$GE_API_KEY --url=$GE_URL --max-builds=200 --project=nowinandroid --requested-task=:core:network:packageDemoDebugAssets  \N
@@ -100,3 +100,22 @@ Provides detailed metrics of the Kotlin compiler for each variant
 
 ```
 
+## Other CI providers
+Telltale uses GitHub Actions as runner component to schedule the experiments as example. You can follow the same approach in different
+CI providers:
+* Default Experiment
+  * Based on the desired iterations, create N executions of the task under investigation for each runner in an isolated runner.
+* Gradle Profiler Experiment
+  * Given a Gradle profile scenario, execute each variant in a different runner
+* Tag your builds with the parameters of the experiment:
+```
+-Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant }} \
+-Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} \
+-Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
+```
+* The GECompare CLI will retrieve the results of the experiment:
+```
+./buildsComparison --experiment-id profile-154 --variants lint-4-1 --variants lint-2-1 \
+--requested-task lintDemoRelease --api-key $GE_API \
+--url $GE_URL
+```
