@@ -92,7 +92,7 @@ jobs:
              run-id: ${{ matrix.runs }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
-             jdk: ${{ (matrix.variant == github.event.inputs.variantA) && github.event.inputs.java-variant-a || (matrix.variant == github.event.inputs.variantB) && github.event.inputs.java-variant-b }}: 
+             jdk: ${{ (matrix.variant == github.event.inputs.variantA) && github.event.inputs.java-variant-a || (matrix.variant == github.event.inputs.variantB) && github.event.inputs.java-variant-b }} 
          - uses: actions/checkout@v3
     report:
       runs-on: "ubuntu-latest"
