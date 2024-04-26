@@ -44,7 +44,7 @@ runs:
       id: sdkman
       with:
         candidate: gradleprofiler
-        version: 0.19.0
+        version: 0.20.0
     - name: Execute Gradle build
       id : geapix
       run: |
