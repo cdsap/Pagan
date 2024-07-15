@@ -27,6 +27,8 @@ runs:
       with:
         distribution: oracle
         java-version: ${{ inputs.jdk }}
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
     - name: Execute Gradle build
       id : gradle-build
       run: |
