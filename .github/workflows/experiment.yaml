@@ -75,8 +75,27 @@ jobs:
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
 
-    execution:
+    seed:
       needs: [iterations]
+      strategy:
+        matrix:
+          variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
+      runs-on: "ubuntu-latest"
+      steps:
+         - uses: actions/checkout@v4
+         - uses: ./.github/workflows/runner-seed
+           with:
+             task: "${{ github.event.inputs.task }}"
+             experiment-id: "${{github.run_number}}"
+             variant: ${{ matrix.variant }}
+             run-id: 1
+             api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+             repository: ${{ github.event.inputs.repository }}
+             jdk: ${{ (matrix.variant == github.event.inputs.variantA) && github.event.inputs.java-variant-a || (matrix.variant == github.event.inputs.variantB) && github.event.inputs.java-variant-b }} 
+         - uses: actions/checkout@v4
+
+    execution:
+      needs: [seed]
       strategy:
         matrix:
           variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]

@@ -1,0 +1,40 @@
+name: 'Experiment runner'
+inputs:
+  task:
+    required: true
+  variant:
+    required: true
+  experiment-id:
+    required: true
+  api-key:
+    required: true
+  repository:
+    required: true
+  run-id:
+    required: true
+  jdk:
+    required: false
+    default: 17
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.variant }}
+    - uses: actions/setup-java@v4
+      with:
+        distribution: oracle
+        java-version: ${{ inputs.jdk }}
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        cache-read-only: false
+    - name: Execute Gradle build
+      id : gradle-build
+      run: |
+           ./gradlew ${{ inputs.task }} -Dscan.tag.seed_${{ inputs.variant }} -Dscan.tag.seed -Dscan.tag.seed_${{inputs.experiment-id}}
+      shell: bash
+      env:
+        GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
