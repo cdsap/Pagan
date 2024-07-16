@@ -18,16 +18,19 @@ on:
       iterations:
         default: 1
         required: true
-      taskpathreport:
-        description: "Include experiment results by task path"
+      mode:
+        description: "Type of execution relative to caching"
         type: choice
         required: true
-        default: 'true'
+        default: 'dependencies cache'
         options:
-          - true
-          - false
-      processreport:
-        description: "Include Gradle/Kotlin process in the experiment results"
+          - 'no caching'
+          - 'dependencies cache'
+          - 'local build cache + dependencies cache' 
+          - 'remote build cache + dependencies cache'
+          - 'remote build cache'
+      taskpathreport:
+        description: "Include experiment results by task path"
         type: choice
         required: true
         default: 'true'
@@ -75,7 +78,7 @@ jobs:
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
 
-    seed:
+    execution:
       needs: [iterations]
       strategy:
         matrix:
@@ -128,7 +131,7 @@ jobs:
              gh_token: ${{secrets.GITHUB_TOKEN}}
              profile: false
              taskpathreport: ${{ github.event.inputs.taskpathreport }}
-             processreport: ${{ github.event.inputs.processreport }}
+             processreport: true
              kotlinreport: ${{ github.event.inputs.kotlinreport }}
 
          - uses: actions/checkout@v4
