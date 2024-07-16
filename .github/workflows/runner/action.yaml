@@ -41,3 +41,4 @@ runs:
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
+        GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'

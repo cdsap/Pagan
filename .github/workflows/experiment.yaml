@@ -78,7 +78,7 @@ jobs:
       outputs:
          iterations: ${{ steps.calculate_iterations.outputs.iterations }}
 
-    execution:
+    seed:
       needs: [iterations]
       strategy:
         matrix:
