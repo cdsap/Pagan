@@ -31,6 +31,8 @@ runs:
       uses: gradle/actions/setup-gradle@v3
       with:
         cache-read-only: false
+        cache-overwrite-existing: true
+        add-job-summary: 'never'
     - name: Execute Gradle build
       id : gradle-build
       run: |
