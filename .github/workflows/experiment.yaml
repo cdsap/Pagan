@@ -95,7 +95,7 @@ jobs:
          - uses: actions/checkout@v4
 
     execution:
-      needs: [seed]
+      needs: [seed,iterations]
       strategy:
         matrix:
           variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
