@@ -33,6 +33,8 @@ runs:
         cache-read-only: false
         cache-overwrite-existing: true
         add-job-summary: 'never'
+        gradle-home-cache-excludes: |
+          caches/build-cache-1
     - name: Execute Gradle build
       id : gradle-build
       run: |
