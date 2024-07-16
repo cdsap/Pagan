@@ -36,6 +36,7 @@ runs:
           caches/build-cache-1
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
+        GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.experiment-id}}
 
     - name: Execute Gradle build
       id : gradle-build
