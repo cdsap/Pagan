@@ -110,8 +110,8 @@ jobs:
            with:
              task: "${{ github.event.inputs.task }}"
              experiment-id: "no-profile-${{github.run_number}}"
+             execution-number: ${{github.run_number}}
              variant: ${{ matrix.variant }}
-             run-id: ${{ matrix.runs }}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
              jdk: ${{ (matrix.variant == github.event.inputs.variantA) && github.event.inputs.java-variant-a || (matrix.variant == github.event.inputs.variantB) && github.event.inputs.java-variant-b }} 

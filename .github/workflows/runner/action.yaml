@@ -15,6 +15,8 @@ inputs:
   jdk:
     required: false
     default: 17
+  execution-number:
+    required: true 
 
 runs:
   using: 'composite'
@@ -36,7 +38,7 @@ runs:
           caches/build-cache-1
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
-        GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.experiment-id}}-${{inputs.variant}}
+        GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.execution-number}}-${{inputs.variant}}
 
     - name: Execute Gradle build
       id : gradle-build
