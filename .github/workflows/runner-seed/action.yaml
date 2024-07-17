@@ -15,6 +15,9 @@ inputs:
   jdk:
     required: false
     default: 17
+  mode:
+    required: true
+  
 
 runs:
   using: 'composite'
@@ -27,14 +30,30 @@ runs:
       with:
         distribution: oracle
         java-version: ${{ inputs.jdk }}
+    - name: Set Gradle Cache Excludes
+      id: set-cache-excludes
+      run: |
+        if [[ "${{ inputs.mode }}" == "no caching" ]]; then
+          echo "GRADLE_HOME_CACHE_EXCLUDES=* >> $GITHUB_ENV
+        elif [[ "${{ inputs.mode }}" == "dependencies cache" ]]; then
+          echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1" >> $GITHUB_ENV
+        elif [[ "${{ inputs.mode }}" == "local build cache + dependencies cache" ]]; then
+          echo "GRADLE_HOME_CACHE_EXCLUDES=" >> $GITHUB_ENV
+        elif [[ "${{ inputs.mode }}" == "remote build cache + dependencies cache" ]]; then
+          echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1" >> $GITHUB_ENV
+        elif [[ "${{ inputs.mode }}" == "remote build cache" ]]; then
+          echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1" >> $GITHUB_ENV
+        else
+          echo "Unknown mode: ${{ inputs.mode }}"
+          exit 1
+        fi        
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
       with:
         cache-write-only: true
         cache-overwrite-existing: true
         add-job-summary: 'never'
-        gradle-home-cache-excludes: |
-          caches/build-cache-1
+        gradle-home-cache-excludes: ${{ env.GRADLE_HOME_CACHE_EXCLUDES }}
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.experiment-id}}-${{inputs.variant}}
     - name: Execute Gradle build
