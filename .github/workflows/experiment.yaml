@@ -170,7 +170,7 @@ jobs:
           kotlinreport: ${{ github.event.inputs.kotlinreport }}
       - uses: actions/checkout@v4
 
-report:
+  report:
     runs-on: "ubuntu-latest"
     needs: [execution-caching]
     steps:
