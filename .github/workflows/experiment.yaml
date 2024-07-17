@@ -101,10 +101,9 @@ jobs:
              jdk: ${{ (matrix.variant == github.event.inputs.variantA) && github.event.inputs.java-variant-a || (matrix.variant == github.event.inputs.variantB) && github.event.inputs.java-variant-b }} 
          - uses: actions/checkout@v4
 
-
     execution:
       needs: [iterations]
-       if: ${{ github.event.inputs.mode == 'no caching' || (needs.seed.outputs.skip != 'true') }}
+      if: ${{ github.event.inputs.mode == 'no caching' || (needs.seed.outputs.skip != 'true') }}
       strategy:
         matrix:
           variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
