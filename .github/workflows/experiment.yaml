@@ -5,18 +5,18 @@ on:
     inputs:
       repository:
         required: true
-        default: "cdsap/KspVsKapt"
+        default: "cdsap/ExperimentGradle8.9"
       variantA:
         required: true
-        default: "lint-4-1-different-process"
+        default: "gradle_8_8"
       variantB:
         required: true
-        default: "lint-2-1-different-process"
+        default: "gradle_8_9"
       task:
-        default: "lintDemoRelease"
+        default: ":core:model:compileKotlin"
         required: true
       iterations:
-        default: 1
+        default: 10
         required: true
       mode:
         description: "Type of execution relative to caching"
