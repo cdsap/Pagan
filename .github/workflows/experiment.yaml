@@ -103,7 +103,7 @@ jobs:
 
   execution-caching:
     if: github.event.inputs.mode != 'no caching'
-    needs: [seed]
+    needs: [seed,iterations]
     runs-on: "ubuntu-latest"
     strategy:
       matrix:
