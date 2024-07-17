@@ -64,3 +64,5 @@ runs:
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
+    - uses: actions/checkout@v4
+            

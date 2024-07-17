@@ -98,8 +98,8 @@ jobs:
           jdk: ${{ (matrix.variant == github.event.inputs.variantA) && github.event.inputs.java-variant-a || (matrix.variant == github.event.inputs.variantB) && github.event.inputs.java-variant-b }}
 
   execution:
-    needs: [iterations]
-    if: ${{ github.event.inputs.mode == 'no caching' || (needs.seed.outputs.skip != 'true') }}
+    needs: ${{ github.event.inputs.mode != 'no caching' && 'seed,iterations' || 'iterations' }}
+    if: ${{ github.event.inputs.mode == 'no caching' || github.event.inputs.mode != 'no caching' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
