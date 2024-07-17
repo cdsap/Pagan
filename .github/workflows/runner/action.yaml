@@ -51,6 +51,7 @@ runs:
       shell: bash              
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
+      if: github.event.inputs.mode != 'no caching'
       with:
         cache-read-only: true
         add-job-summary: 'never'
