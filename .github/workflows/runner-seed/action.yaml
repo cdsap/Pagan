@@ -15,10 +15,9 @@ inputs:
   jdk:
     required: false
     default: 17
-  execution-number:
-    required: true 
   mode:
-    required: true 
+    required: true
+  
 
 runs:
   using: 'composite'
@@ -47,25 +46,23 @@ runs:
         else
           echo "Unknown mode: ${{ inputs.mode }}"
           exit 1
-        fi  
-      shell: bash              
+        fi      
+      shell: bash    
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-      if: github.event.inputs.mode != 'no caching'
       with:
-        cache-read-only: true
+        cache-write-only: true
+        cache-overwrite-existing: true
         add-job-summary: 'never'
-        gradle-home-cache-excludes: |
-          caches/build-cache-1
+        gradle-home-cache-excludes: ${{ env.GRADLE_HOME_CACHE_EXCLUDES }}
       env:
-        GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
-        GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.execution-number}}-${{inputs.variant}}
-
+        GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.experiment-id}}-${{inputs.variant}}
     - name: Execute Gradle build
       id : gradle-build
       run: |
-           ./gradlew ${{ inputs.task }}  -Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
+           ./gradlew ${{ inputs.task }} -Dscan.tag.seed_${{ inputs.variant }} -Dscan.tag.seed -Dscan.tag.seed_${{inputs.experiment-id}}
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
-        GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
+    - uses: actions/checkout@v4
+            
