@@ -17,6 +17,8 @@ inputs:
     default: 17
   mode:
     required: true
+  extra-args:
+    required: true  
   
 
 runs:
@@ -60,7 +62,7 @@ runs:
     - name: Execute Gradle build
       id : gradle-build
       run: |
-           ./gradlew ${{ inputs.task }} -Dscan.tag.seed_${{ inputs.variant }} -Dscan.tag.seed -Dscan.tag.seed_${{inputs.experiment-id}}
+           ./gradlew ${{ inputs.task }} ${{ inputs.extra-args }} -Dscan.tag.seed_${{ inputs.variant }} -Dscan.tag.seed -Dscan.tag.seed_${{inputs.experiment-id}}
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
