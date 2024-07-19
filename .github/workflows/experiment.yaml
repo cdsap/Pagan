@@ -46,7 +46,7 @@ on:
       additional_args:
         description: JSON of additional options
         type: string
-        default: "{java-variant-a:'17',java-variant-b:'17',extra-args-varinat-a:'',extra-args-variant-b:''}"
+        default: "{javaVariantA:'17',javaVariantB:'17',extraArgsVarinatA:'',extraArgsVariantB:''}"
         required: false          
 
 
@@ -93,8 +93,8 @@ jobs:
           run-id: 1
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           repository: ${{ github.event.inputs.repository }}
-          extra-args: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).extra-args-varinat-a || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).extra-args-varinat-b }} 
-          jdk: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).java-variant-a || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).java-variant-b }} 
+          extra-args: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).extraArgsVarinatA || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).extraArgsVarinatB }} 
+          jdk: ${{ (matrix.variant == github.event.inputs.variantA) && fromJson(github.event.inputs.additional_args).javaVariantA || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).javaVariantB }} 
       - uses: actions/checkout@v4
     outputs:
       iterations: ${{ needs.iterations.outputs.iterations }}
@@ -122,8 +122,8 @@ jobs:
           variant: ${{ matrix.variant }}
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           repository: ${{ github.event.inputs.repository }}
-          extra-args: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).extra-args-varinat-a || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).extra-args-varinat-b }} 
-          jdk: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).java-variant-a || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).java-variant-b }} 
+          extra-args: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).extraArgsVarinatA || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).extraArgsVarinatB }} 
+          jdk: ${{ (matrix.variant == github.event.inputs.variantA) && fromJson(github.event.inputs.additional_args).javaVariantA || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).javaVariantB }} 
       - uses: actions/checkout@v4
 
   execution-no-caching:
@@ -148,8 +148,8 @@ jobs:
           variant: ${{ matrix.variant }}
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           repository: ${{ github.event.inputs.repository }}
-          extra-args: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).extra-args-varinat-a || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).extra-args-varinat-b }} 
-          jdk: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).java-variant-a || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).java-variant-b }} 
+          extra-args: ${{ (matrix.variant == github.event.inputs.variantA) &&  fromJson(github.event.inputs.additional_args).extraArgsVarinatA || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).extraArgsVarinatB }} 
+          jdk: ${{ (matrix.variant == github.event.inputs.variantA) && fromJson(github.event.inputs.additional_args).javaVariantA || (matrix.variant == github.event.inputs.variantB) &&  fromJson(github.event.inputs.additional_args).javaVariantB }} 
       - uses: actions/checkout@v4
 
   report-no-caching:
