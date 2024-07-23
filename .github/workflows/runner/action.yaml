@@ -55,8 +55,7 @@ runs:
       with:
         cache-read-only: true
         add-job-summary: 'never'
-        gradle-home-cache-excludes: |
-          caches/build-cache-1
+        gradle-home-cache-excludes: ${{ env.GRADLE_HOME_CACHE_EXCLUDES }}
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.execution-number}}-${{inputs.variant}}
