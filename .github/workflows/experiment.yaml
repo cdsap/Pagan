@@ -27,6 +27,7 @@ on:
           - 'no caching'
           - 'dependencies cache'
           - 'local build cache + dependencies cache' 
+          - 'remote cache' 
       taskpathreport:
         description: "Include experiment results by task path"
         type: choice
