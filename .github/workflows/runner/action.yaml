@@ -21,7 +21,9 @@ inputs:
     required: true 
   extra-args:
     required: true  
-
+  cache-url:
+    required: false  
+    
 runs:
   using: 'composite'
   steps:
@@ -59,7 +61,6 @@ runs:
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.execution-number}}-${{inputs.variant}}
-        CI_URL_CACHE_NODE: ${{ secrets.CI_URL_CACHE_NODE }}
 
     - name: Execute Gradle build
       id : gradle-build
@@ -69,3 +70,4 @@ runs:
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
+        CI_URL_CACHE_NODE: ${{ inputs.cache-url }}
