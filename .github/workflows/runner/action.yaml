@@ -36,15 +36,13 @@ runs:
     - name: Set Gradle Cache Excludes
       id: set-cache-excludes
       run: |
-        if [[ "${{ inputs.mode }}" == "no caching" ]]; then
+        if [[ "${{ inputs.mode }}" == "remote cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES='**'" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "dependencies cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "local build cache + dependencies cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES=" >> $GITHUB_ENV
-        elif [[ "${{ inputs.mode }}" == "remote build cache + dependencies cache" ]]; then
-          echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1" >> $GITHUB_ENV
-        elif [[ "${{ inputs.mode }}" == "remote build cache" ]]; then
+        elif [[ "${{ inputs.mode }}" == "remote cache + dependencies cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1" >> $GITHUB_ENV
         else
           echo "Unknown mode: ${{ inputs.mode }}"

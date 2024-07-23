@@ -28,6 +28,7 @@ on:
           - 'dependencies cache'
           - 'local build cache + dependencies cache' 
           - 'remote cache' 
+          - 'remote cache + dependencies cache'
       taskpathreport:
         description: "Include experiment results by task path"
         type: choice
@@ -47,7 +48,7 @@ on:
       additional_args:
         description: JSON of additional options
         type: string
-        default: "{javaVariantA:'17',javaVariantB:'17',extraArgsVarinatA:'',extraArgsVariantB:''}"
+        default: "{javaVariantA:'17',javaVariantB:'17',extraArgsVarinatA:' ',extraArgsVariantB:' '}"
         required: false          
 
 
