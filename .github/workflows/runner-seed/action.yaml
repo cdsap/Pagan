@@ -65,5 +65,6 @@ runs:
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
+        CI_URL_CACHE_NODE: ${{ secrets.CI_URL_CACHE_NODE }}
     - uses: actions/checkout@v4
             

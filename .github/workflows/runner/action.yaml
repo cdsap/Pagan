@@ -59,6 +59,7 @@ runs:
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.execution-number}}-${{inputs.variant}}
+        CI_URL_CACHE_NODE: ${{ secrets.CI_URL_CACHE_NODE }}
 
     - name: Execute Gradle build
       id : gradle-build
