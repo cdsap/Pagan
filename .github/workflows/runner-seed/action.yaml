@@ -40,7 +40,7 @@ runs:
         if [[ "${{ inputs.mode }}" == "remote cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES='**'" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "dependencies cache" ]]; then
-          echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1:caches/8.9/transforms" >> $GITHUB_ENV
+          echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1\ncaches/8.9/transforms" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "local build cache + dependencies cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES=" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "remote cache + dependencies cache" ]]; then
@@ -57,7 +57,8 @@ runs:
         cache-write-only: true
         cache-overwrite-existing: true
         add-job-summary: 'never'
-        gradle-home-cache-excludes: ${{ env.GRADLE_HOME_CACHE_EXCLUDES }}
+        gradle-home-cache-excludes: |
+           ${{ env.GRADLE_HOME_CACHE_EXCLUDES }}
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.experiment-id}}-${{inputs.variant}}
     - name: Execute Gradle build
