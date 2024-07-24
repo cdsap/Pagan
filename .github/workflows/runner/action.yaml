@@ -58,7 +58,8 @@ runs:
         cache-read-only: true
         add-job-summary: 'never'
         gradle-home-cache-excludes: |
-           ${{ env.GRADLE_HOME_CACHE_EXCLUDES }}
+           caches/build-cache-1
+           caches/8.9/transforms
 
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
