@@ -50,7 +50,7 @@ runs:
         fi  
       shell: bash              
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
+      uses: gradle/actions/setup-gradle@v4
       if: github.event.inputs.mode != 'no caching'
       with:
         cache-read-only: true
