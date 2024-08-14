@@ -41,6 +41,9 @@ runs:
           echo "GRADLE_HOME_CACHE_EXCLUDES='**'" >> $GITHUB_ENV
           echo "GRADLE_HOME_CACHE_INCLUDES=''" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "dependencies cache" ]]; then
+            echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
+            echo -e "caches/build-cache-1\ncaches/*/transforms" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
           echo "GRADLE_HOME_CACHE_EXCLUDES=\"caches/build-cache-1\ncaches/*/transforms\"" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "local build cache + dependencies cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES=" >> $GITHUB_ENV
