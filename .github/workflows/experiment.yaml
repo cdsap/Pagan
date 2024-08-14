@@ -8,10 +8,10 @@ on:
         default: "cdsap/ExperimentGradle8.9"
       variantA:
         required: true
-        default: "gradle_8_8"
+        default: "gradle_8_9_caching_transforms-gradle"
       variantB:
         required: true
-        default: "gradle_8_9"
+        default: "gradle_8_9_nocaching_transforms-gradle"
       task:
         default: ":core:model:compileKotlin"
         required: true
@@ -48,7 +48,7 @@ on:
       additional_args:
         description: JSON of additional options
         type: string
-        default: "{javaVariantA:'17',javaVariantB:'17',extraArgsVariantA:' ',extraArgsVariantB:' '}"
+        default: "{javaVariantA:'17',javaVariantB:'17',extraArgsVariantA:' ',extraArgsVariantB:' -Dorg.gradle.internal.transform-caching-disabled '}"
         required: false          
 
 
