@@ -37,11 +37,12 @@ runs:
     - name: Set Gradle Cache Excludes
       id: set-cache-excludes
       run: |
-          MULTI_LINES_TEXT="caches/build-cache-1 \n
-                      caches/*/transforms" 
+          MULTI_LINES_TEXT1="caches/build-cache-1"
+          MULTI_LINES_TEXT2="caches/8.9/transforms"
           echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
-          echo $MULTI_LINES_TEXT >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV                      
+          echo $MULTI_LINES_TEXT1 >> $GITHUB_ENV
+          echo $MULTI_LINES_TEXT2 >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV                        
       shell: bash    
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
