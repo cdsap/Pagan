@@ -45,7 +45,7 @@ runs:
         elif [[ "${{ inputs.mode }}" == "local build cache + dependencies cache" ]]; then
           echo "GRADLE_HOME_CACHE_EXCLUDES=" >> $GITHUB_ENV
         elif [[ "${{ inputs.mode }}" == "remote cache + dependencies cache" ]]; then
-          echo "GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1" >> $GITHUB_ENV
+          echo 'GRADLE_HOME_CACHE_EXCLUDES=caches/build-cache-1 caches/*/transforms' >> $GITHUB_ENV
         else
           echo "Unknown mode: ${{ inputs.mode }}"
           exit 1
