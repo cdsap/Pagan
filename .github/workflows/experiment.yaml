@@ -8,10 +8,10 @@ on:
         default: "cdsap/ExperimentGradle8.9"
       variantA:
         required: true
-        default: "gradle_8_9_caching_transforms-gradle"
+        default: "gradle_8_9_caching_transforms"
       variantB:
         required: true
-        default: "gradle_8_9_nocaching_transforms-gradle"
+        default: "gradle_8_9_no_caching_transforms"
       task:
         default: ":core:model:compileKotlin"
         required: true
