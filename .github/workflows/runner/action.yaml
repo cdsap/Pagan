@@ -36,6 +36,7 @@ runs:
         distribution: oracle
         java-version: ${{ inputs.jdk }}
     - name: Set Gradle Cache Excludes
+      if: github.event.inputs.mode != 'no caching'    
       id: set-cache-excludes
       run: |
           BUILD_CACHE_ENTRY="caches/build-cache-1"
