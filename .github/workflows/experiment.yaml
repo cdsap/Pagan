@@ -8,7 +8,7 @@ on:
         default: "cdsap/ExperimentGradle8.9"
       variantA:
         required: true
-        default: "gradle_8_9_caching_transforms"
+        default: "gradle_8_9_no_caching_transforms"
       variantB:
         required: true
         default: "gradle_8_9_no_caching_transforms"
@@ -26,9 +26,15 @@ on:
         options:
           - 'no caching'
           - 'dependencies cache'
-          - 'local build cache + dependencies cache' 
-          - 'remote cache' 
-          - 'remote cache + dependencies cache'
+          - 'dependencies cache - trasnforms cache'
+          - 'local task cache' 
+          - 'local task cache + dependencies cache' 
+          - 'local task cache - transforms cache' 
+          - 'local task cache + dependencies cache - transforms cache' 
+          - 'remote task cache' 
+          - 'remote task cache + dependencies cache'
+          - 'remote task cache - transforms cache' 
+          - 'remote task cache + dependencies cache - transforms cache'
       taskpathreport:
         description: "Include experiment results by task path"
         type: choice
