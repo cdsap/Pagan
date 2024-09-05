@@ -43,7 +43,7 @@ on:
       extra_build_args:
         description: Extra build arguments
         type: string
-        default: "extraArgsVariantA:' ',extraArgsVariantB:' '}"
+        default: "{extraArgsVariantA:' ',extraArgsVariantB:' '}"
         required: false
       extra_report_args:
         description: Report configuration
