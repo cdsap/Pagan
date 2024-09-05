@@ -4,6 +4,8 @@ inputs:
     required: true
   variant:
     required: true
+  variant-prefix:
+    required: true    
   experiment-id:
     required: true
   api-key:
@@ -12,9 +14,12 @@ inputs:
     required: true
   run-id:
     required: true
-  jdk:
+  jdk_version:
     required: false
     default: 17
+  jdk_vendor:
+    required: false
+    default: "zulu"    
   execution-number:
     required: true 
   mode:
@@ -33,8 +38,8 @@ runs:
         ref: ${{ inputs.variant }}
     - uses: actions/setup-java@v4
       with:
-        distribution: oracle
-        java-version: ${{ inputs.jdk }}
+        distribution: ${{ inputs.jdk_vendor }}
+        java-version: ${{ inputs.jdk_version }}
     - name: Set Gradle Cache Excludes
       if: github.event.inputs.mode != 'no caching'    
       id: set-cache-excludes
@@ -104,7 +109,7 @@ runs:
     - name: Execute Gradle build
       id : gradle-build
       run: |
-           ./gradlew ${{ inputs.task }} ${{ inputs.extra-args }} -Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant }} -Dscan.tag."${{ inputs.mode }}" -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
+           ./gradlew ${{ inputs.task }} ${{ inputs.extra-args }} -Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant-prefix }}_${{ inputs.variant }} -Dscan.tag."${{ inputs.mode }}" -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
