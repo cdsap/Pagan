@@ -40,10 +40,7 @@ runs:
       with:
         distribution: ${{ inputs.jdk_vendor }}
         java-version: ${{ inputs.jdk_version }}
-    - name: Set Gradle Cache Excludes
-      if: github.event.inputs.mode != 'no caching'    
-      id: set-cache-excludes
-      run: 
+      run: |
           BUILD_CACHE_ENTRY="caches/build-cache-1"
           TRANSFORM_CACHE_ENTRY="caches/**/transforms"
           MODULES_CACHE_ENTRY="caches/modules-*/*"
