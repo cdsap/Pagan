@@ -44,7 +44,7 @@ runs:
       if: github.event.inputs.mode != 'no caching'    
       id: set-cache-excludes
       run: ./.github/scripts/set-cache-excludes.sh "${{ inputs.mode }}"
-      shell: bash    
+      shell: bash
     - name: Setup Gradle
       if: github.event.inputs.mode != 'no caching'    
       uses: gradle/actions/setup-gradle@v3
