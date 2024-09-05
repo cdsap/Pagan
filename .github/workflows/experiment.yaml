@@ -133,7 +133,7 @@ jobs:
           mode: "${{ github.event.inputs.mode }}"
           experiment-id: "no-profile-${{github.run_number}}"
           execution-number: ${{github.run_number}}
-          variant: ${{ matrix.variant }}
+          variant: ${{ matrix.config.variant }}
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           cache-url: ${{ secrets.CI_URL_CACHE_NODE }}
           repository: ${{ github.event.inputs.repository }}
@@ -166,7 +166,7 @@ jobs:
           mode: "${{ github.event.inputs.mode }}"
           experiment-id: "no-profile-${{github.run_number}}"
           execution-number: ${{github.run_number}}
-          variant: ${{ matrix.variant }}
+          variant: ${{ matrix.config.variant }}
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           repository: ${{ github.event.inputs.repository }}
           variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && 'variantb_' }}
