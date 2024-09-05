@@ -116,7 +116,11 @@ jobs:
     runs-on: "ubuntu-latest"
     strategy:
       matrix:
-        variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
+       config:
+          - variant: ${{ github.event.inputs.variantA }}
+            index: 0       
+          - variant: ${{ github.event.inputs.variantB }}
+            index: 1       
         runs: ${{ fromJson(needs.seed.outputs.iterations) }}
     steps:
       - uses: actions/checkout@v4
@@ -145,7 +149,11 @@ jobs:
     runs-on: "ubuntu-latest"
     strategy:
       matrix:
-        variant: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
+       config:
+          - variant: ${{ github.event.inputs.variantA }}
+            index: 0       
+          - variant: ${{ github.event.inputs.variantB }}
+            index: 1       
         runs: ${{ fromJson(needs.iterations.outputs.iterations) }}
     steps:
       - uses: actions/checkout@v4
