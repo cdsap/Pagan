@@ -40,6 +40,8 @@ runs:
       with:
         distribution: ${{ inputs.jdk_vendor }}
         java-version: ${{ inputs.jdk_version }}
+    - name: Set Gradle Cache Excludes
+      id: set-cache-excludes
       run: |
           BUILD_CACHE_ENTRY="caches/build-cache-1"
           TRANSFORM_CACHE_ENTRY="caches/**/transforms"
