@@ -35,7 +35,7 @@ runs:
     - name: Execute CompareGEBuilds
       id : compareBuilds
       run: |
-           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v0.3.1/build-experiment-results --output build-experiment-results
+           curl -L https://github.com/cdsap/CompareGEBuilds/releases/download/v0.3.2/build-experiment-results --output build-experiment-results
            chmod 0757 build-experiment-results
            #process tags
            tags="${{ inputs.tags }}"
@@ -68,7 +68,7 @@ runs:
            then
              kotlinreport="--no-kotlin-build-report"
            fi
-           ./build-experiment-results --url=${{ inputs.url }} $taskpathreport $processreport $kotlinreport $profile --requested-task=${{ inputs.task }} --max-builds=${{ inputs.max-builds }}  $tagsParsed --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
+           ./build-experiment-results --url=${{ inputs.url }} $taskpathreport $processreport $kotlinreport $profile --max-builds=${{ inputs.max-builds }}  $tagsParsed --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
            CONTENT=$(cat results_experiment)
            echo "$CONTENT" >> $GITHUB_STEP_SUMMARY
       shell: bash
