@@ -5,7 +5,7 @@ inputs:
   variant:
     required: true
   variant-prefix:
-    required: true    
+    required: true
   experiment-id:
     required: true
   api-key:

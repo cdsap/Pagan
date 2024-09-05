@@ -35,22 +35,6 @@ on:
           - 'remote task cache + dependencies cache'
           - 'remote task cache - transforms cache' 
           - 'remote task cache + dependencies cache - transforms cache'
-      taskpathreport:
-        description: "Include experiment results by task path"
-        type: choice
-        required: true
-        default: 'true'
-        options:
-          - true
-          - false
-      kotlinreport:
-        description: "Include Kotlin Build reports in the experiment results"
-        type: choice
-        required: true
-        default: 'true'
-        options:
-          - true
-          - false
       java_args:
         description: JDK vendor and version
         type: string
