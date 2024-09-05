@@ -102,7 +102,7 @@ jobs:
           repository: ${{ github.event.inputs.repository }}
           variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && 'variantb_' }}
           extra-args: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 &&  fromJson(github.event.inputs.extra_build_args).extraArgsVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0 &&  fromJson(github.event.inputs.extra_build_args).extraArgsVariantB }}
-          jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 &&fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVersionVariantB }}
+          jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVersionVariantB }}
           jdk_vendor: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVendorVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVendorVariantB }}
           cache-url: ${{ secrets.CI_URL_CACHE_NODE }}
       - uses: actions/checkout@v4
@@ -135,7 +135,7 @@ jobs:
           repository: ${{ github.event.inputs.repository }}
           variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && 'variantb_' }}
           extra-args: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 &&  fromJson(github.event.inputs.extra_build_args).extraArgsVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0 &&  fromJson(github.event.inputs.extra_build_args).extraArgsVariantB }}
-          jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 &&fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVersionVariantB }}
+          jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVersionVariantB }}
           jdk_vendor: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVendorVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVendorVariantB }}
       - uses: actions/checkout@v4
 
@@ -163,7 +163,7 @@ jobs:
           repository: ${{ github.event.inputs.repository }}
           variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && 'variantb_' }}
           extra-args: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 &&  fromJson(github.event.inputs.extra_build_args).extraArgsVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0 &&  fromJson(github.event.inputs.extra_build_args).extraArgsVariantB }}
-          jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 &&fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVersionVariantB }}
+          jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVersionVariantB }}
           jdk_vendor: ${{ (matrix.config.variant == github.event.inputs.variantA)  &&  matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVendorVariantA || (matrix.config.variant == github.event.inputs.variantB)  &&  matrix.config.index == 0  &&  fromJson(github.event.inputs.java_args).javaVendorVariantB }}
       - uses: actions/checkout@v4
 
