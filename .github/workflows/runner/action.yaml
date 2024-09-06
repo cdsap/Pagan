@@ -88,6 +88,8 @@ runs:
             echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
             echo $BUILD_CACHE_ENTRY >> $GITHUB_ENV
             echo $TRANSFORM_CACHE_ENTRY >> $GITHUB_ENV
+          elif [[ "${{ inputs.mode }}" == "dependencies cache - trasnforms cache" ]]; then
+            echo "GRADLE_HOME_CACHE_EXCLUDES=**" >> $GITHUB_ENV
           else
             echo "Unknown mode: ${{ inputs.mode }}"
             exit 1
