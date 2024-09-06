@@ -2,7 +2,7 @@ BUILD_CACHE_ENTRY="caches/build-cache-1"
 TRANSFORM_CACHE_ENTRY="caches/**/transforms"
 MODULES_CACHE_ENTRY="caches/modules-*/*"
 JAR_CACHE_ENTRY="caches/jars-*/*"
-echo "sldslldsldls"
+
 if [[ "${{ inputs.mode }}" == "dependencies cache" ]]; then
     echo "GRADLE_HOME_CACHE_EXCLUDES=$BUILD_CACHE_ENTRY" >> $GITHUB_ENV
 elif [[ "${{ inputs.mode }}" == "dependencies cache - trasnforms cache" ]]; then
