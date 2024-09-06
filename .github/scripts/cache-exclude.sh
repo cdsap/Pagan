@@ -4,9 +4,9 @@ MODULES_CACHE_ENTRY="caches/modules-*/*"
 JAR_CACHE_ENTRY="caches/jars-*/*"
 
 if [[ "${{ inputs.mode }}" == "dependencies cache" ]]; then
-    echo "GRADLE_HOME_CACHE_EXCLUDES=$BUILD_CACHE_ENTRY" >> $GITHUB_ENV
+    echo "GRADLE_HOME_CACHE_EXCLUDES=$BUILD_CACHE_ENTRY" 
 elif [[ "${{ inputs.mode }}" == "dependencies cache - trasnforms cache" ]]; then
-    echo "GRADLE_HOME_CACHE_EXCLUDES=$TRANSFORM_CACHE_ENTRY" >> $GITHUB_ENV
+    echo "GRADLE_HOME_CACHE_EXCLUDES=$TRANSFORM_CACHE_ENTRY" 
 elif [[ "${{ inputs.mode }}" == "remote task cache" ]]; then  
     {
         echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF"
@@ -14,18 +14,18 @@ elif [[ "${{ inputs.mode }}" == "remote task cache" ]]; then
         echo "$MODULES_CACHE_ENTRY"
         echo "$JAR_CACHE_ENTRY"
         echo "EOF"
-    } >> $GITHUB_ENV
+    } 
 elif [[ "${{ inputs.mode }}" == "local task cache" ]]; then  
     {
         echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF"
         echo "$MODULES_CACHE_ENTRY"
         echo "$JAR_CACHE_ENTRY"
         echo "EOF"
-    } >> $GITHUB_ENV
+    } 
 elif [[ "${{ inputs.mode }}" == "local task cache + dependencies cache" ]]; then  
-    echo "GRADLE_HOME_CACHE_EXCLUDES=''" >> $GITHUB_ENV
+    echo "GRADLE_HOME_CACHE_EXCLUDES=''" 
 elif [[ "${{ inputs.mode }}" == "remote task cache + dependencies cache" ]]; then  
-    echo "GRADLE_HOME_CACHE_EXCLUDES='$BUILD_CACHE_ENTRY'" >> $GITHUB_ENV
+    echo "GRADLE_HOME_CACHE_EXCLUDES='$BUILD_CACHE_ENTRY'" 
 elif [[ "${{ inputs.mode }}" == "remote task cache - transforms cache" ]]; then  
     {
         echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF"
@@ -34,7 +34,7 @@ elif [[ "${{ inputs.mode }}" == "remote task cache - transforms cache" ]]; then
         echo "$JAR_CACHE_ENTRY"
         echo "$TRANSFORM_CACHE_ENTRY"
         echo "EOF"
-    } >> $GITHUB_ENV
+    } 
 elif [[ "${{ inputs.mode }}" == "local task cache - transforms cache" ]]; then  
     {
         echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF"
@@ -42,20 +42,20 @@ elif [[ "${{ inputs.mode }}" == "local task cache - transforms cache" ]]; then
         echo "$MODULES_CACHE_ENTRY"
         echo "$JAR_CACHE_ENTRY"
         echo "EOF"
-    } >> $GITHUB_ENV
+    } 
 elif [[ "${{ inputs.mode }}" == "local task cache + dependencies cache - transforms cache" ]]; then  
     {
         echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF"
         echo "$TRANSFORM_CACHE_ENTRY"
         echo "EOF"
-    } >> $GITHUB_ENV
+    } 
 elif [[ "${{ inputs.mode }}" == "remote task cache + dependencies cache - transforms cache" ]]; then  
     {
         echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF"
         echo "$BUILD_CACHE_ENTRY"
         echo "$TRANSFORM_CACHE_ENTRY"
         echo "EOF"
-    } >> $GITHUB_ENV
+    } 
 else
     echo "Unknown mode: ${{ inputs.mode }}"
     exit 1
