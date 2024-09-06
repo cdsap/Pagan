@@ -19,10 +19,16 @@ inputs:
     required: true
   taskpathreport:
     required: true
+  tasktypereport:
+    required: true
   processreport:
     required: true
   kotlinreport:
     required: true
+  resourceusagereport:
+    required: true    
+  onlycacheableoutcome:
+    required: true    
 
 runs:
   using: 'composite'
@@ -53,22 +59,51 @@ runs:
            else
              profile=""
            fi
+           
            taskpathreport=""
            if [ "${{ inputs.taskpathreport }}" == "false" ]
            then
              taskpathreport="--no-task-path-report"
+           else
+             taskpathreport="--task-path-report"
+           fi
+           tasktypereport=""
+           if [ "${{ inputs.tasktypereport }}" == "false" ]
+           then
+             tasktypereport="--no-task-type-report"
+           else
+             tasktypereport="--task-type-report"
            fi
            processreport=""
            if [ "${{ inputs.processreport }}" == "false" ]
            then
              processreport="--no-process-report"
+           else
+             processreport="--process-report"  
            fi
            kotlinreport=""
            if [ "${{ inputs.kotlinreport }}" == "false" ]
            then
              kotlinreport="--no-kotlin-build-report"
+           else
+             kotlinreport="--kotlin-build-report"  
            fi
-           ./build-experiment-results --url=${{ inputs.url }} $taskpathreport $processreport $kotlinreport $profile --max-builds=${{ inputs.max-builds }}  $tagsParsed --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
+           resourceusagereport=""
+           if [ "${{ inputs.resourceusagereport }}" == "false" ]
+           then
+             resourceusagereport="--no-resource-usage-report"
+           else
+             resourceusagereport="--resource-usage-report"  
+           fi
+           onlycacheableoutcome=""
+           if [ "${{ inputs.onlycacheableoutcome }}" == "false" ]
+           then
+             onlycacheableoutcome="--no-only-cacheable-outcome"
+            else
+             onlycacheableoutcome="--only-cacheable-outcome"
+           fi
+
+           ./build-experiment-results --url=${{ inputs.url }} $taskpathreport $tasktypereport $processreport $kotlinreport $resourceusagereport $onlycacheableoutcome $profile --max-builds=${{ inputs.max-builds }}  $tagsParsed --experiment-id=${{ inputs.experiment-id }}  --api-key=${{ inputs.api-key }}
            CONTENT=$(cat results_experiment)
            echo "$CONTENT" >> $GITHUB_STEP_SUMMARY
       shell: bash
