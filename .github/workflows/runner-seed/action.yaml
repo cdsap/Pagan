@@ -46,7 +46,8 @@ runs:
       run: |
           echo "${{ input.cache-exclude-script }}" > execute_task.sh
           chmod +x execute_task.sh
-          ./execute_task.sh
+          cat execute_task.sh
+          bash execute_task.sh
       shell: bash    
     - name: Setup Gradle
       if: github.event.inputs.mode != 'no caching'     
