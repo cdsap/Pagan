@@ -34,6 +34,12 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
+    - name: Read task from file
+      id: read-task
+      run: |
+        cache_exclude_content=$(cat .github/scripts/cache-exclude.sh)
+        echo "cache_exclude_content=${cache_exclude_content}" >> $GITHUB_ENV
+    - uses: actions/checkout@v4
       with:
         repository: ${{ inputs.repository }}
         ref: ${{ inputs.variant }}
@@ -44,7 +50,7 @@ runs:
     - name: Set Gradle Cache Excludes
       id: set-cache-excludes
       run: |
-          echo "${{ input.cache-exclude-script }}" > execute_task.sh
+          echo "${{ env.cache_exclude_content }}" > execute_task.sh
           chmod +x execute_task.sh
           cat execute_task.sh
           bash execute_task.sh

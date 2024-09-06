@@ -89,14 +89,8 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v4
-      - name: Read task from file
-        id: read-task
-        run: |
-          cache_exclude_content=$(cat .github/scripts/cache-exclude.sh)
-          echo "cache_exclude_content=${cache_exclude_content}" >> $GITHUB_ENV
       - uses: ./.github/workflows/runner-seed
         with:
-          cache-exclude-script: "${{ env.cache_exclude_content }}"
           task: "${{ github.event.inputs.task }}"
           mode: "${{ github.event.inputs.mode }}"
           experiment-id: "${{github.run_number}}"
