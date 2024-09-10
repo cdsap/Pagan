@@ -64,6 +64,7 @@ runs:
              EXTRA_ARG="-Pfoo"
            else
              EXTRA_ARG="${{ inputs.extra-args }}"  
+           fi  
 
            if [ -z "${{ inputs.class }}" ]
            then
