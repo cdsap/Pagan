@@ -46,7 +46,10 @@ jobs:
     runners:
       strategy:
         matrix:
-          version: ["${{ github.event.inputs.variantA }}","${{ github.event.inputs.variantB }}"]
+          config:
+            - variant: ${{ github.event.inputs.variantA }}
+              index: 0       
+            - variant: ${{ github.event.inputs.variantB }}
       runs-on: "${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && fromJson(github.event.inputs.os_args).variantA  || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && fromJson(github.event.inputs.os_args).variantB }}"
       steps:
          - uses: actions/checkout@v4
