@@ -151,6 +151,7 @@ jobs:
           extra-args: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantB }}
           jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.java_args).javaVersionVariantB }}
           jdk_vendor: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVendorVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.java_args).javaVendorVariantB }}
+      - uses: actions/checkout@v4
 
   execution-no-caching:
     name: Execution without Caching
@@ -183,6 +184,7 @@ jobs:
           extra-args: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantB }}
           jdk_version: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVersionVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.java_args).javaVersionVariantB }}
           jdk_vendor: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.java_args).javaVendorVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.java_args).javaVendorVariantB }}
+      - uses: actions/checkout@v4
 
   report-no-caching:
     name: Report for No Caching
