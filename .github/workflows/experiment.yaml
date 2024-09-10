@@ -48,9 +48,13 @@ on:
       extra_report_args:
         description: Report configuration
         type: string
-        default: "{report_enabled:'true',taskpath_report:'true',kotlin_build_report:'true',process_report:'true'}"
+        default: "{report_enabled:'true',tasktype_report:'true',taskpath_report:'true',kotlin_build_report:'false',process_report:'false',resource_usage_report:'true',only_cacheable_outcome:'false'}"
         required: false
-
+      os_args:
+        description: OS
+        type: string
+        default: "{varianta:'ubuntu-latest',variantb:'ubuntu-latest'}"
+        required: false
 
 
 run-name: "${{ github.event.inputs.repository }}-${{ github.event.inputs.mode }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
@@ -74,7 +78,6 @@ jobs:
           done
           iterations="$iterations ]"
           echo "iterations=$iterations" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
     outputs:
       iterations: ${{ steps.calculate_iterations.outputs.iterations }}
 
@@ -88,11 +91,12 @@ jobs:
             index: 0       
           - variant: ${{ github.event.inputs.variantB }}
             index: 1       
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && fromJson(github.event.inputs.os_args).variantA  || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && fromJson(github.event.inputs.os_args).variantB }}"
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/runner-seed
         with:
+          cache-exclude-script: "${{ env.cache_exclude_content }}"
           task: "${{ github.event.inputs.task }}"
           mode: "${{ github.event.inputs.mode }}"
           experiment-id: "${{github.run_number}}"
@@ -191,8 +195,11 @@ jobs:
           gh_token: ${{secrets.GITHUB_TOKEN}}
           profile: false
           taskpathreport: fromJson(github.event.inputs.extra_report_args).taskpath_report
+          tasktypereport: fromJson(github.event.inputs.extra_report_args).tasktype_report
           processreport: fromJson(github.event.inputs.extra_report_args).process_report
           kotlinreport:  fromJson(github.event.inputs.extra_report_args).kotlin_build_report
+          resourceusagereport: fromJson(github.event.inputs.extra_report_args).resource_usage_report
+          onlycacheableoutcome: fromJson(github.event.inputs.extra_report_args).only_cacheable_outcome
       - uses: actions/checkout@v4
 
   report:
@@ -211,6 +218,9 @@ jobs:
           gh_token: ${{secrets.GITHUB_TOKEN}}
           profile: false
           taskpathreport: fromJson(github.event.inputs.extra_report_args).taskpath_report
+          tasktypereport: fromJson(github.event.inputs.extra_report_args).tasktype_report
           processreport: fromJson(github.event.inputs.extra_report_args).process_report
           kotlinreport:  fromJson(github.event.inputs.extra_report_args).kotlin_build_report
+          resourceusagereport: fromJson(github.event.inputs.extra_report_args).resource_usage_report
+          onlycacheableoutcome: fromJson(github.event.inputs.extra_report_args).only_cacheable_outcome
       - uses: actions/checkout@v4      
