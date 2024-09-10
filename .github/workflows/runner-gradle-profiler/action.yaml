@@ -70,9 +70,9 @@ runs:
 
            if [ -z "${{ inputs.class }}" ]
            then
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = [$EXTRA_ARG, "-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
+               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = ["$EXTRA_ARG", "-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
            else
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n apply-abi-change-to = [${{ inputs.class }}] \n gradle-args = [$EXTRA_ARG,"-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
+               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n apply-abi-change-to = [${{ inputs.class }}] \n gradle-args = ["$EXTRA_ARG","-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
            fi
            gradle-profiler-0.20.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
            TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"
