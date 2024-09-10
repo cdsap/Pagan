@@ -53,7 +53,7 @@ on:
       os_args:
         description: OS
         type: string
-        default: "{varianta:'ubuntu-latest',variantb:'ubuntu-latest'}"
+        default: "{variantA:'ubuntu-latest',variantB:'ubuntu-latest'}"
         required: false
 
 

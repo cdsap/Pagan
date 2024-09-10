@@ -39,6 +39,7 @@ runs:
       run: |
         cache_exclude_content=$(cat .github/scripts/cache-exclude.sh)
         echo "cache_exclude_content=${cache_exclude_content}" >> $GITHUB_ENV
+      shell: bash    
     - uses: actions/checkout@v4
       with:
         repository: ${{ inputs.repository }}
