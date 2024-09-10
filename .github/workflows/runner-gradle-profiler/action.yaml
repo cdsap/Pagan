@@ -58,30 +58,38 @@ runs:
     - name: Execute Gradle build
       id : geapix
       run: |
-           unzip  ${{ steps.sdkman.outputs.file }}
-           
-           EXTRA_ARG=""
-           if [ -z "${{ inputs.extra-args }}" ]
-           then
-             EXTRA_ARG="-Pfoo"
-           else
-             EXTRA_ARG="${{ inputs.extra-args }}"  
-           fi  
+          unzip  ${{ steps.sdkman.outputs.file }}
+          EXTRA_ARG=""
+          if [ -z "${{ inputs.extra-args }}" ]; then
+            EXTRA_ARG="-Pfoo"
+          else
+            EXTRA_ARG="${{ inputs.extra-args }}"
+          fi
 
-           if [ -z "${{ inputs.class }}" ]
-           then
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = ["$EXTRA_ARG", "-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
-           else
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n apply-abi-change-to = [${{ inputs.class }}] \n gradle-args = ["$EXTRA_ARG","-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
-           fi
-           gradle-profiler-0.20.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
-           TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"
-           while read line
-           do
-            IN=$line
-            set -- "$IN"
-            IFS=","; declare -a Array=($*)
-            TABLE_OUTPUT="$TABLE_OUTPUT<tr><td>${Array[0]}</td><td>${Array[1]}</td></tr>"
+          if [ -z "${{ inputs.class }}" ]; then
+            echo "assemble {
+              title = \"assemble\"
+              tasks = [\"${{ inputs.task }}\"]
+              cleanup-tasks = [\"clean\"]
+              gradle-args = [\"$EXTRA_ARG\", \"-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}\", \"-Dscan.tag.experiment\", \"-Dscan.tag.${{ inputs.experiment-id }}\"]
+            }" > scenario
+          else
+            echo "assemble {
+              title = \"assemble\"
+              tasks = [\"${{ inputs.task }}\"]
+              cleanup-tasks = [\"clean\"]
+              apply-abi-change-to = [${{ inputs.class }}]
+              gradle-args = [\"$EXTRA_ARG\", \"-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}\", \"-Dscan.tag.experiment\", \"-Dscan.tag.${{ inputs.experiment-id }}\"]
+            }" > scenario
+          fi           
+          gradle-profiler-0.20.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
+          TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"
+          while read line
+          do
+           IN=$line
+           set -- "$IN"
+           IFS=","; declare -a Array=($*)
+           TABLE_OUTPUT="$TABLE_OUTPUT<tr><td>${Array[0]}</td><td>${Array[1]}</td></tr>"
            done < <(tail -n +2 profile-out/benchmark.csv)
            echo "$TABLE_OUTPUT</table>" >> $GITHUB_STEP_SUMMARY
 
