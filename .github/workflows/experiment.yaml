@@ -135,7 +135,7 @@ jobs:
         with:
           task: "${{ github.event.inputs.task }}"
           mode: "${{ github.event.inputs.mode }}"
-          experiment-id: "no-profile-${{github.run_number}}"
+          experiment-id: "${{ github.repository_owner }}-${{github.run_number}}"
           execution-number: ${{github.run_number}}
           variant: ${{ matrix.config.variant }}
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
@@ -169,7 +169,7 @@ jobs:
         with:
           task: "${{ github.event.inputs.task }}"
           mode: "${{ github.event.inputs.mode }}"
-          experiment-id: "no-profile-${{github.run_number}}"
+          experiment-id: "${{ github.repository_owner }}-${{github.run_number}}"
           execution-number: ${{github.run_number}}
           variant: ${{ matrix.config.variant }}
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
@@ -189,7 +189,7 @@ jobs:
       - uses: ./.github/workflows/report
         with:
           task: "${{ github.event.inputs.task }}"
-          experiment-id: "no-profile-${{github.run_number}}"
+          experiment-id: "${{ github.repository_owner }}-${{github.run_number}}"
           tags: "varianta_${{ github.event.inputs.variantA }},variantb_${{ github.event.inputs.variantB }}"
           api-key: ${{ secrets.GE_API_KEY }}
           url: ${{ secrets.GE_URL }}
@@ -212,7 +212,7 @@ jobs:
       - uses: ./.github/workflows/report
         with:
           task: "${{ github.event.inputs.task }}"
-          experiment-id: "no-profile-${{github.run_number}}"
+          experiment-id: "${{ github.repository_owner }}-${{github.run_number}}"
           tags: "varianta_${{ github.event.inputs.variantA }},variantb_${{ github.event.inputs.variantB }}"
           api-key: ${{ secrets.GE_API_KEY }}
           url: ${{ secrets.GE_URL }}

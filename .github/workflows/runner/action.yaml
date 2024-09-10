@@ -48,8 +48,7 @@ runs:
       with:
         cache-read-only: true
         add-job-summary: 'never'
-        gradle-home-cache-excludes: ${{ inputs.cache-excludes }}
-           
+        gradle-home-cache-excludes: ${{ inputs.cache-excludes }}      
       env:
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB_INSTANCE: ${{inputs.execution-number}}-${{inputs.variant}}
@@ -57,7 +56,7 @@ runs:
     - name: Execute Gradle build
       id : gradle-build
       run: |
-           ./gradlew ${{ inputs.task }} ${{ inputs.extra-args }} -Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }} -Dscan.tag."${{ inputs.mode }}" -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}} -Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}
+           ./gradlew ${{ inputs.task }} ${{ inputs.extra-args }} -Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }} -Dscan.tag."${{ inputs.mode }}" -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}}
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
