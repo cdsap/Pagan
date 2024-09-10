@@ -40,7 +40,7 @@ on:
         default: "{report_enabled:'true',tasktype_report:'true',taskpath_report:'true',kotlin_build_report:'false',process_report:'false',resource_usage_report:'true',only_cacheable_outcome:'false'}"
         required: false
 
-run-name: "profile-${{ github.event.inputs.repository }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
+run-name: "profiler-${{ github.event.inputs.repository }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
 
 jobs:
     runners:
@@ -52,8 +52,6 @@ jobs:
          - uses: actions/checkout@v4
          - uses: ./.github/workflows/runner-gradle-profiler
            with:
-             task: "${{ github.event.inputs.task }}"
-             mode: "${{ github.event.inputs.mode }}"
              execution-number: ${{github.run_number}}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
