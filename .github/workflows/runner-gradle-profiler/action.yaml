@@ -59,8 +59,10 @@ runs:
       id : geapix
       run: |
            unzip  ${{ steps.sdkman.outputs.file }}
+           
            EXTRA_ARG=""
            if [ -z "${{ inputs.extra-args }}" ]
+           then
              EXTRA_ARG="-Pfoo"
            else
              EXTRA_ARG="${{ inputs.extra-args }}"  
