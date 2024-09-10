@@ -4,18 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       repository:
+        description: "GitHub repository to run the experiment"
         required: true
         default: "cdsap/ExperimentGradle8.9"
       variantA:
+        description: "Experiment branch name for variant A"
         required: true
         default: "gradle_8_9_no_caching_transforms"
       variantB:
+        description: "Experiment branch name for variant B"
         required: true
         default: "gradle_8_9_no_caching_transforms"
       task:
+        description: "Gradle task to be executed"
         default: ":core:model:compileKotlin"
         required: true
       iterations:
+        description: "Number of iterations for the experiment"
         default: 10
         required: true
       mode:
@@ -36,25 +41,25 @@ on:
           - 'remote task cache - transforms cache' 
           - 'remote task cache + dependencies cache - transforms cache'
       os_args:
-        description: OS
+        description: "Operating system configurations for variants"
         type: string
         default: "{variantA:'ubuntu-latest',variantB:'ubuntu-latest'}"
-        required: false
+        required: true
       java_args:
-        description: JDK vendor and version
+        description: "JDK vendor and version for each variant"
         type: string
         default: "{javaVersionVariantA:'17',javaVersionVariantB:'17',javaVendorVariantA:'zulu',javaVendorVariantB:'zulu'}"
-        required: false          
+        required: true          
       extra_build_args:
-        description: Extra build arguments
+        description: "Extra build arguments for each variant"
         type: string
         default: "{extraArgsVariantA:' ',extraArgsVariantB:' '}"
-        required: false
+        required: true
       extra_report_args:
-        description: Report configuration
+        description: "Configuration for generating reports"
         type: string
         default: "{report_enabled:'true',tasktype_report:'true',taskpath_report:'true',kotlin_build_report:'false',process_report:'false',resource_usage_report:'true',only_cacheable_outcome:'false'}"
-        required: false
+        required: true
 
 
 run-name: "${{ github.event.inputs.repository }}-${{ github.event.inputs.mode }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"

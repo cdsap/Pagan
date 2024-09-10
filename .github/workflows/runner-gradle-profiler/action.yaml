@@ -82,7 +82,6 @@ runs:
               gradle-args = [\"$EXTRA_ARG\", \"-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}\", \"-Dscan.tag.experiment\", \"-Dscan.tag.${{ inputs.experiment-id }}\"]
             }" > scenario
           fi 
-          cat scenario          
           gradle-profiler-0.20.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
           TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"
           while read line
