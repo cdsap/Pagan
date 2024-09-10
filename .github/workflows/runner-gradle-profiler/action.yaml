@@ -28,12 +28,14 @@ inputs:
     required: true
   repository:
     required: true
-  jdk:
+  jdk_version:
     required: false
     default: 17
   jdk_vendor:
     required: false
-    default: "zulu"  
+    default: "zulu"
+  extra-args:
+    required: true        
 
 runs:
   using: 'composite'
@@ -44,8 +46,8 @@ runs:
         ref: ${{ inputs.variant }}
     - uses: actions/setup-java@v4
       with:
-        distribution: ${{ inputs.vendor }}
-        java-version: ${{ inputs.jdk }}
+        distribution: ${{ inputs.jdk_vendor }}
+        java-version: ${{ inputs.jdk_version }}
     - uses: sdkman/sdkman-action@master
       id: sdkman
       with:

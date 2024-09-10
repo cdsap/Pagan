@@ -55,7 +55,6 @@ jobs:
          - uses: actions/checkout@v4
          - uses: ./.github/workflows/runner-gradle-profiler
            with:
-             execution-number: ${{github.run_number}}
              api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
              repository: ${{ github.event.inputs.repository }}
              variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && 'variantb_' }}
