@@ -34,13 +34,6 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
-    - name: Read task from file
-      id: read-task
-      run: |
-        cache_exclude_content=$(cat .github/scripts/cache-exclude.sh)
-        echo "cache_exclude_content=${cache_exclude_content}" >> $GITHUB_ENV
-      shell: bash    
-    - uses: actions/checkout@v4
       with:
         repository: ${{ inputs.repository }}
         ref: ${{ inputs.variant }}
@@ -51,10 +44,57 @@ runs:
     - name: Set Gradle Cache Excludes
       id: set-cache-excludes
       run: |
-          echo "${{ env.cache-cache_exclude_content-script }}" > execute_task.sh
-          chmod +x execute_task.sh
-          cat execute_task.sh
-          bash execute_task.sh
+          BUILD_CACHE_ENTRY="caches/build-cache-1"
+          TRANSFORM_CACHE_ENTRY="caches/**/transforms"
+          MODULES_CACHE_ENTRY="caches/modules-*/*"
+          JAR_CACHE_ENTRY="caches/jars-*/*"
+
+          if [[ "${{ inputs.mode }}" == "dependencies cache" ]]; then
+            echo "GRADLE_HOME_CACHE_EXCLUDES=$BUILD_CACHE_ENTRY" >> $GITHUB_ENV
+          elif [[ "${{ inputs.mode }}" == "dependencies cache - trasnforms cache" ]]; then
+            echo "GRADLE_HOME_CACHE_EXCLUDES=$TRANSFORM_CACHE_ENTRY" >> $GITHUB_ENV
+          elif [[ "${{ inputs.mode }}" == "remote task cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
+            echo $BUILD_CACHE_ENTRY >> $GITHUB_ENV
+            echo $MODULES_CACHE_ENTRY >> $GITHUB_ENV
+            echo $JAR_CACHE_ENTRY >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV                     
+          elif [[ "${{ inputs.mode }}" == "local task cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
+            echo $MODULES_CACHE_ENTRY >> $GITHUB_ENV
+            echo $JAR_CACHE_ENTRY >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV                     
+          elif [[ "${{ inputs.mode }}" == "local task cache + dependencies cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES=''" >> $GITHUB_ENV
+          elif [[ "${{ inputs.mode }}" == "remote task cache + dependencies cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES='$BUILD_CACHE_ENTRY'" >> $GITHUB_ENV
+          elif [[ "${{ inputs.mode }}" == "remote task cache - transforms cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
+            echo $BUILD_CACHE_ENTRY >> $GITHUB_ENV
+            echo $MODULES_CACHE_ENTRY >> $GITHUB_ENV
+            echo $JAR_CACHE_ENTRY >> $GITHUB_ENV
+            echo $TRANSFORM_CACHE_ENTRY >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV                     
+          elif [[ "${{ inputs.mode }}" == "local task cache - transforms cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
+            echo $TRANSFORM_CACHE_ENTRY >> $GITHUB_ENV
+            echo $MODULES_CACHE_ENTRY >> $GITHUB_ENV
+            echo $JAR_CACHE_ENTRY >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV                     
+          elif [[ "${{ inputs.mode }}" == "local task cache + dependencies cache - transforms cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
+            echo $TRANSFORM_CACHE_ENTRY >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV                     
+          elif [[ "${{ inputs.mode }}" == "remote task cache + dependencies cache - transforms cache" ]]; then  
+            echo "GRADLE_HOME_CACHE_EXCLUDES<<EOF" >> $GITHUB_ENV
+            echo $BUILD_CACHE_ENTRY >> $GITHUB_ENV
+            echo $TRANSFORM_CACHE_ENTRY >> $GITHUB_ENV
+          elif [[ "${{ inputs.mode }}" == "no caching" ]]; then
+            echo "GRADLE_HOME_CACHE_EXCLUDES=**" >> $GITHUB_ENV
+          else
+            echo "Unknown mode: ${{ inputs.mode }}"
+            exit 1
+          fi
       shell: bash    
     - name: Setup Gradle
       if: github.event.inputs.mode != 'no caching'     
