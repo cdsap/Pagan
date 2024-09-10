@@ -19,6 +19,7 @@ on:
         required: false
       iterations:
         required: false
+        default: 5
       os_args:
         description: OS
         type: string
@@ -81,7 +82,7 @@ jobs:
             api-key: ${{ secrets.GE_API_KEY }}
             url: ${{ secrets.GE_URL }}
             gh_token: ${{secrets.GITHUB_TOKEN}}
-            profile: false
+            profile: true
             taskpathreport: fromJson(github.event.inputs.extra_report_args).taskpath_report
             tasktypereport: fromJson(github.event.inputs.extra_report_args).tasktype_report
             processreport: fromJson(github.event.inputs.extra_report_args).process_report
