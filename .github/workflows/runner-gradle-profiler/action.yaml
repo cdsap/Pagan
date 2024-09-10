@@ -36,6 +36,8 @@ inputs:
     default: "zulu"
   extra-args:
     required: true        
+  cache-url:
+    required: false    
 
 runs:
   using: 'composite'
@@ -78,6 +80,7 @@ runs:
       shell: bash
       env:
         DEVELOCITY_ACCESS_KEY: ${{ inputs.api-key }}
+        CI_URL_CACHE_NODE: ${{ inputs.cache-url }}        
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4
       with:
