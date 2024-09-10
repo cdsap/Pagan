@@ -60,7 +60,7 @@ runs:
       run: |
           unzip  ${{ steps.sdkman.outputs.file }}
           EXTRA_ARG=""
-          if [ -z "${{ inputs.extra-args }}" ]; then
+          if [ -z "${{ inputs.extra-args }}" ] || [ -z "$(echo "${{ inputs.extra-args }}" | tr -d '[:space:]')" ]; then
             EXTRA_ARG="-Pfoo"
           else
             EXTRA_ARG="${{ inputs.extra-args }}"
@@ -81,7 +81,8 @@ runs:
               apply-abi-change-to = [${{ inputs.class }}]
               gradle-args = [\"$EXTRA_ARG\", \"-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}\", \"-Dscan.tag.experiment\", \"-Dscan.tag.${{ inputs.experiment-id }}\"]
             }" > scenario
-          fi           
+          fi 
+          cat scenario          
           gradle-profiler-0.20.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
           TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"
           while read line
