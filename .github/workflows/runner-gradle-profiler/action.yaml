@@ -59,11 +59,17 @@ runs:
       id : geapix
       run: |
            unzip  ${{ steps.sdkman.outputs.file }}
+           EXTRA_ARG=""
+           if [ -z "${{ inputs.extra-args }}" ]
+             EXTRA_ARG="-Pfoo"
+           else
+             EXTRA_ARG="${{ inputs.extra-args }}"  
+
            if [ -z "${{ inputs.class }}" ]
            then
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = ["${{ inputs.extra-args }}", "-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
+               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = [$EXTRA_ARG, "-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
            else
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n apply-abi-change-to = [${{ inputs.class }}] \n gradle-args = ["${{ inputs.extra-args }}","-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
+               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n apply-abi-change-to = [${{ inputs.class }}] \n gradle-args = [$EXTRA_ARG,"-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
            fi
            gradle-profiler-0.20.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
            TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"
