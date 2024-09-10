@@ -29,6 +29,10 @@ inputs:
   jdk:
     required: false
     default: 17
+  jdk_vendor:
+    required: false
+    default: "zulu"  
+
 runs:
   using: 'composite'
   steps:
@@ -38,7 +42,7 @@ runs:
         ref: ${{ inputs.variant }}
     - uses: actions/setup-java@v4
       with:
-        distribution: zulu
+        distribution: ${{ inputs.vendor }}
         java-version: ${{ inputs.jdk }}
     - uses: sdkman/sdkman-action@master
       id: sdkman
@@ -51,9 +55,9 @@ runs:
            unzip  ${{ steps.sdkman.outputs.file }}
            if [ -z "${{ inputs.class }}" ]
            then
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = ["-Dscan.tag.${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
+               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n gradle-args = ["-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
            else
-               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n apply-abi-change-to = [${{ inputs.class }}] \n gradle-args = ["-Dscan.tag.${{ inputs.variant }}", "-Dscan.tag.${{inputs.experiment-id}}_variant_experiment_${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
+               echo $'assemble { \n title= "assemble" \n tasks = ["${{ inputs.task }}"] \n cleanup-tasks = ["clean"] \n apply-abi-change-to = [${{ inputs.class }}] \n gradle-args = ["-Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }}", "-Dscan.tag.experiment", "-Dscan.tag.${{inputs.experiment-id}}"] \n}' > scenario
            fi
            gradle-profiler-0.20.0/bin/gradle-profiler --benchmark --scenario-file scenario assemble --warmups ${{ inputs.warmups }} --iterations ${{ inputs.iterations }}
            TABLE_OUTPUT="<table><tr><td>Build</td><td></td></tr>"

@@ -117,7 +117,7 @@ jobs:
   execution-caching:
     if: github.event.inputs.mode != 'no caching'
     needs: [seed]
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && fromJson(github.event.inputs.os_args).variantA  || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && fromJson(github.event.inputs.os_args).variantB }}"
     strategy:
       matrix:
        runs: ${{ fromJson(needs.seed.outputs.iterations) }}
@@ -151,7 +151,7 @@ jobs:
   execution-no-caching:
     if: github.event.inputs.mode == 'no caching'
     needs: [iterations]
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && fromJson(github.event.inputs.os_args).variantA  || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && fromJson(github.event.inputs.os_args).variantB }}"
     strategy:
       matrix:
        runs: ${{ fromJson(needs.iterations.outputs.iterations) }}
