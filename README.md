@@ -1,6 +1,8 @@
-# Experiment Workflows for Gradle Enterprise
+# Telltale
 
-This repository contains GitHub Actions workflows designed to run various experiments and generate reports for Gradle Enterprise builds. The workflows support executing Gradle tasks with different configurations and comparing the performance and caching strategies across different variants.
+This repository contains GitHub Actions workflows designed to run various experiments and generate reports for Develocity builds. The workflows support executing Gradle tasks with different configurations and comparing the performance and caching strategies across different variants.
+
+<img alt="workflow" src="resources/workflow.png"/>
 
 ## Table of Contents
 
@@ -85,16 +87,16 @@ Executes Gradle builds using the Gradle Profiler, enabling benchmarking of build
 ### Report
 If `extra_report_args` defines `report_enabled:'true`, a report will be generated at the end of the variant experiments. The report is generated with https://github.com/cdsap/BuildExperimentResults:
 
-<img alt="Summary" src="resources/summary.png" width="200"/>
+<img alt="Summary" src="resources/summary.png"/>
 
 ## Setup
 
 To use these workflows, ensure the following prerequisites are met:
 
 1. **GitHub Secrets**: Set up the required secrets in your GitHub repository settings:
-   - `GRADLE_ENTERPRISE_ACCESS_KEY`: API key for Gradle Enterprise access.
+   - `GRADLE_ENTERPRISE_ACCESS_KEY`: API key for Develocity access.
    - `GE_API_KEY`: API key used in report generation.
-   - `GE_URL`: URL of the Gradle Enterprise server.
+   - `GE_URL`: URL of the Develocity server.
    - `GITHUB_TOKEN`: GitHub token for authentication.
 
 2. **Repository Structure**: Ensure your repository includes the required files for each workflow to function, particularly any custom actions referenced (e.g., `.github/workflows/runner-seed`, `.github/workflows/runner-gradle-profiler`).
