@@ -35,6 +35,11 @@ on:
           - 'remote task cache + dependencies cache'
           - 'remote task cache - transforms cache' 
           - 'remote task cache + dependencies cache - transforms cache'
+      os_args:
+        description: OS
+        type: string
+        default: "{variantA:'ubuntu-latest',variantB:'ubuntu-latest'}"
+        required: false
       java_args:
         description: JDK vendor and version
         type: string
@@ -49,11 +54,6 @@ on:
         description: Report configuration
         type: string
         default: "{report_enabled:'true',tasktype_report:'true',taskpath_report:'true',kotlin_build_report:'false',process_report:'false',resource_usage_report:'true',only_cacheable_outcome:'false'}"
-        required: false
-      os_args:
-        description: OS
-        type: string
-        default: "{variantA:'ubuntu-latest',variantB:'ubuntu-latest'}"
         required: false
 
 
@@ -139,6 +139,7 @@ jobs:
           execution-number: ${{github.run_number}}
           variant: ${{ matrix.config.variant }}
           api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          cache-excludes: ${{ steps.seed.outputs.cache-excludes }}
           cache-url: ${{ secrets.CI_URL_CACHE_NODE }}
           repository: ${{ github.event.inputs.repository }}
           variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) &&  matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) &&  matrix.config.index == 1 && 'variantb_' }}

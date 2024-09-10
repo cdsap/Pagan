@@ -27,7 +27,10 @@ inputs:
   cache-url:
     required: false  
   cache-exclude-script:
-    required: false         
+    required: false  
+outputs:
+  cache-excludes:
+    description: 'cache logic exclusion'           
   
 
 runs:
@@ -95,6 +98,7 @@ runs:
             echo "Unknown mode: ${{ inputs.mode }}"
             exit 1
           fi
+          echo "cache-excludes=$GRADLE_HOME_CACHE_EXCLUDES" >> $GITHUB_ENV
       shell: bash    
     - name: Setup Gradle
       if: github.event.inputs.mode != 'no caching'     
