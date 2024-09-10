@@ -59,6 +59,6 @@ runs:
            ./gradlew ${{ inputs.task }} ${{ inputs.extra-args }} -Dscan.tag.${{ inputs.run-id }} -Dscan.tag.${{ inputs.variant-prefix }}${{ inputs.variant }} -Dscan.tag."${{ inputs.mode }}" -Dscan.tag.experiment -Dscan.tag.${{inputs.experiment-id}}
       shell: bash
       env:
-        GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
+        DEVELOCITY_ACCESS_KEY: ${{ inputs.api-key }}
         GRADLE_BUILD_ACTION_CACHE_KEY_JOB: 'seed'
         CI_URL_CACHE_NODE: ${{ inputs.cache-url }}

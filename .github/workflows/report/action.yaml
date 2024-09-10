@@ -23,7 +23,13 @@ inputs:
     required: true
   kotlinreport:
     required: true
-
+  tasktypereport:
+    required: true
+  resourceusagereport:
+    required: true
+  onlycacheableoutcome:
+    required: true
+    
 runs:
   using: 'composite'
   steps:
