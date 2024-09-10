@@ -18,6 +18,8 @@ inputs:
   variant:
     description: "variant of the experiment, represents the branch"
     required: true
+  variant-prefix:
+    required: true    
   experiment-id:
     description: ""
     required: true
