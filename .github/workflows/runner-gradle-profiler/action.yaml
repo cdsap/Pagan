@@ -29,15 +29,15 @@ inputs:
   repository:
     required: true
   jdk_version:
-    required: false
+    required: true
     default: 17
   jdk_vendor:
-    required: false
+    required: true
     default: "zulu"
   extra-args:
     required: true        
   cache-url:
-    required: false    
+    required: true
 
 runs:
   using: 'composite'
