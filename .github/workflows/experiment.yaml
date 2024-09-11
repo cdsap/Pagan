@@ -225,9 +225,9 @@ jobs:
           url: ${{ secrets.GE_URL }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           profile: false
-          taskpathreport: fromJson(github.event.inputs.extra_report_args).taskpath_report
-          tasktypereport: fromJson(github.event.inputs.extra_report_args).tasktype_report
-          processreport: fromJson(github.event.inputs.extra_report_args).process_report
-          kotlinreport: fromJson(github.event.inputs.extra_report_args).kotlin_build_report
-          resourceusagereport: fromJson(github.event.inputs.extra_report_args).resource_usage_report
-          onlycacheableoutcome: fromJson(github.event.inputs.extra_report_args).only_cacheable_outcome
+          taskpathreport: ${{ fromJson(github.event.inputs.extra_report_args).taskpath_report }}
+          tasktypereport: ${{ fromJson(github.event.inputs.extra_report_args).tasktype_report }}
+          processreport: ${{ fromJson(github.event.inputs.extra_report_args).process_report }}
+          kotlinreport: ${{ fromJson(github.event.inputs.extra_report_args).kotlin_build_report }}
+          resourceusagereport: ${{ fromJson(github.event.inputs.extra_report_args).resource_usage_report }}
+          onlycacheableoutcome: ${{ fromJson(github.event.inputs.extra_report_args).only_cacheable_outcome }}
