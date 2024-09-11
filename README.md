@@ -98,7 +98,6 @@ To use these workflows, ensure the following prerequisites are met:
    - `DV_ACCESS_KEY`: API key for Develocity access.
    - `DV_API_KEY`: API key used in report generation.
    - `DV_URL`: URL of the Develocity server.
-   - `GITHUB_TOKEN`: GitHub token for authentication.
 
 2. **Repository Structure**: Ensure your repository includes the required files for each workflow to function, particularly any custom actions referenced (e.g., `.github/workflows/runner-seed`, `.github/workflows/runner-gradle-profiler`).
 

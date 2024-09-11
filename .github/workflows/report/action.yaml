@@ -113,7 +113,7 @@ runs:
           onlycacheableoutcome="--no-only-cacheable-outcome"
         fi
 
-        thresholdtaskduration="---threshold-task-duration ${{ inputs.thresholdtaskduration }}"
+        thresholdtaskduration="--threshold-task-duration ${{ inputs.thresholdtaskduration }}"
 
         # Execute the comparison with the appropriate arguments
         ./build-experiment-results --url=${{ inputs.url }} $tasktypereport $resourceusagereport $onlycacheableoutcome $taskpathreport $processreport $kotlinreport $thresholdtaskduration $profile --max-builds=${{ inputs.max-builds }} $tagsParsed --experiment-id=${{ inputs.experiment-id }} --api-key=${{ inputs.api-key }}
