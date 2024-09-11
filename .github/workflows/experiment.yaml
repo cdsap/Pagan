@@ -58,7 +58,7 @@ on:
       extra_report_args:
         description: "Configuration for generating reports"
         type: string
-        default: "{report_enabled:'true',tasktype_report:'true',taskpath_report:'true',kotlin_build_report:'false',process_report:'false',resource_usage_report:'true',only_cacheable_outcome:'false'}"
+        default: "{report_enabled:'true',tasktype_report:'true',taskpath_report:'true',kotlin_build_report:'false',process_report:'false',resource_usage_report:'true',only_cacheable_outcome:'false',threshold_task_duration:'1000'}"
         required: true
 
 run-name: "${{ github.event.inputs.repository }}-${{ github.event.inputs.mode }}-${{ github.event.inputs.variantA }}-${{ github.event.inputs.variantB }}-${{ github.event.inputs.task }}"
@@ -106,7 +106,7 @@ jobs:
           experiment-id: "${{ github.run_number }}"
           variant: ${{ matrix.config.variant }}
           run-id: 1
-          api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          api-key: ${{ secrets.DV_ACCESS_KEY }}
           repository: ${{ github.event.inputs.repository }}
           variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && 'variantb_' }}
           extra-args: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantB }}
@@ -143,7 +143,7 @@ jobs:
           experiment-id: "${{ github.repository_owner }}-${{ github.run_number }}"
           execution-number: ${{ github.run_number }}
           variant: ${{ matrix.config.variant }}
-          api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          api-key: ${{ secrets.DV_ACCESS_KEY }}
           cache-excludes: ${{ steps.seed.outputs.cache-excludes }}
           cache-url: ${{ secrets.CI_URL_CACHE_NODE }}
           repository: ${{ github.event.inputs.repository }}
@@ -178,7 +178,7 @@ jobs:
           experiment-id: "${{ github.repository_owner }}-${{ github.run_number }}"
           execution-number: ${{ github.run_number }}
           variant: ${{ matrix.config.variant }}
-          api-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          api-key: ${{ secrets.DV_ACCESS_KEY }}
           repository: ${{ github.event.inputs.repository }}
           variant-prefix: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && 'varianta_' || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && 'variantb_' }}
           extra-args: ${{ (matrix.config.variant == github.event.inputs.variantA) && matrix.config.index == 0 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantA || (matrix.config.variant == github.event.inputs.variantB) && matrix.config.index == 1 && fromJson(github.event.inputs.extra_build_args).extraArgsVariantB }}
@@ -198,8 +198,8 @@ jobs:
           task: "${{ github.event.inputs.task }}"
           experiment-id: "${{ github.repository_owner }}-${{ github.run_number }}"
           tags: "varianta_${{ github.event.inputs.variantA }},variantb_${{ github.event.inputs.variantB }}"
-          api-key: ${{ secrets.GE_API_KEY }}
-          url: ${{ secrets.GE_URL }}
+          api-key: ${{ secrets.DV_API_KEY }}
+          url: ${{ secrets.DV_URL }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           profile: false
           taskpathreport: fromJson(github.event.inputs.extra_report_args).taskpath_report
@@ -208,6 +208,7 @@ jobs:
           kotlinreport: fromJson(github.event.inputs.extra_report_args).kotlin_build_report
           resourceusagereport: fromJson(github.event.inputs.extra_report_args).resource_usage_report
           onlycacheableoutcome: fromJson(github.event.inputs.extra_report_args).only_cacheable_outcome
+          thresholdtaskduration: ${{ fromJson(github.event.inputs.extra_report_args).threshold_task_duration }} 
 
   report:
     name: Report with Caching
@@ -221,8 +222,8 @@ jobs:
           task: "${{ github.event.inputs.task }}"
           experiment-id: "${{ github.repository_owner }}-${{ github.run_number }}"
           tags: "varianta_${{ github.event.inputs.variantA }},variantb_${{ github.event.inputs.variantB }}"
-          api-key: ${{ secrets.GE_API_KEY }}
-          url: ${{ secrets.GE_URL }}
+          api-key: ${{ secrets.DV_API_KEY }}
+          url: ${{ secrets.DV_URL }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           profile: false
           taskpathreport: ${{ fromJson(github.event.inputs.extra_report_args).taskpath_report }}
@@ -231,3 +232,4 @@ jobs:
           kotlinreport: ${{ fromJson(github.event.inputs.extra_report_args).kotlin_build_report }}
           resourceusagereport: ${{ fromJson(github.event.inputs.extra_report_args).resource_usage_report }}
           onlycacheableoutcome: ${{ fromJson(github.event.inputs.extra_report_args).only_cacheable_outcome }}
+          thresholdtaskduration: ${{ fromJson(github.event.inputs.extra_report_args).threshold_task_duration }} 

@@ -70,6 +70,7 @@ This workflow executes Gradle tasks across two specified variants (branches) wit
       - `process_report`: Include process-related reports. Requires [InfoKotlinProcess](https://github.com/cdsap/InfoKotlinProcess) and [InfoGradleProcess](https://github.com/cdsap/InfoGradleProcess).
       - `resource_usage_report`: Include resource usage reports. Requires builds using Develocity 2024.2.
       - `only_cacheable_outcome`: Include only cacheable outcomes in the report.
+      - `threshold_task_duration`: Threshold of task duration(ms) for the task path report. Default 1000.
     - **Example**: `{report_enabled:'true',tasktype_report:'true',taskpath_report:'true',kotlin_build_report:'false',process_report:'false',resource_usage_report:'true',only_cacheable_outcome:'false'}`
 
 ### Experiment with Gradle Profiler
@@ -94,9 +95,9 @@ If `extra_report_args` defines `report_enabled:'true`, a report will be generate
 To use these workflows, ensure the following prerequisites are met:
 
 1. **GitHub Secrets**: Set up the required secrets in your GitHub repository settings:
-   - `GRADLE_ENTERPRISE_ACCESS_KEY`: API key for Develocity access.
-   - `GE_API_KEY`: API key used in report generation.
-   - `GE_URL`: URL of the Develocity server.
+   - `DV_ACCESS_KEY`: API key for Develocity access.
+   - `DV_API_KEY`: API key used in report generation.
+   - `DV_URL`: URL of the Develocity server.
    - `GITHUB_TOKEN`: GitHub token for authentication.
 
 2. **Repository Structure**: Ensure your repository includes the required files for each workflow to function, particularly any custom actions referenced (e.g., `.github/workflows/runner-seed`, `.github/workflows/runner-gradle-profiler`).
