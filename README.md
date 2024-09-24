@@ -1,8 +1,5 @@
 # Telltale
-
-This repository contains GitHub Actions workflows designed to run various experiments and generate reports for Develocity builds. The workflows support executing Gradle tasks with different configurations and comparing the performance and caching strategies across different variants.
-
-<img alt="workflow" src="resources/workflow.png"/>
+Experimentation framework for Gradle Builds
 
 ## Table of Contents
 
@@ -15,8 +12,11 @@ This repository contains GitHub Actions workflows designed to run various experi
 - [License](#license)
 
 ## Overview
-
+This repository contains GitHub Actions workflows that serve as an experimentation framework for comparing two variants executing Gralde builds.
 These workflows are designed to automate the testing and reporting of Gradle builds within different caching and execution modes. They help in understanding the performance impact of various configurations by running experiments on specified branches and comparing the results.
+There are different phases in the workflow experiment execution:
+<img alt="Summary" src="resources/experiment_execution.png"/>
+
 
 ## Workflows
 
@@ -32,7 +32,6 @@ This workflow executes Gradle tasks across two specified variants (branches) wit
   - `mode`: The type of caching to apply during the experiment. 
     - **Description**: Specifies the level and type of caching used during the experiment to evaluate its impact on performance. Caching modes can be adjusted to test different scenarios including no caching, dependency caching, task caching (local or remote), and combinations with transform caches.
     - **Options**:
-      - `no caching`: Disables all forms of caching.
       - `dependencies cache`: Caches dependencies only, without caching task outputs.
       - `dependencies cache - transforms cache`: Caches dependencies, excluding transforms cache.
       - `local task cache`: Enables caching of task outputs locally.
@@ -43,7 +42,8 @@ This workflow executes Gradle tasks across two specified variants (branches) wit
       - `remote task cache + dependencies cache`: Combines remote task caching with dependency caching.
       - `remote task cache - transforms cache`: Caches task outputs remotely, excluding transforms.
       - `remote task cache + dependencies cache - transforms cache`: Combines remote task, dependency caching, and excludes transforms.
-
+      - `no caching`: Disables all forms of caching.
+      
   - `os_args`: OS configurations for each variant.
     - **Description**: Defines the operating system settings for each variant, specifying which OS image to use during the workflow execution. This is useful for testing builds across different environments.
     - **Format**: A JSON string specifying the OS for each variant.
@@ -75,14 +75,14 @@ This workflow executes Gradle tasks across two specified variants (branches) wit
 
 ### Experiment with Gradle Profiler
 
-Executes Gradle builds using the Gradle Profiler, enabling benchmarking of build scenarios with customizable iterations and ABI changes. Generates a report based on the results.
+Instead of using agents based on the iterations of the experiment, Gradle Profiler experument uses gradle-profiler to orchestrae the execution of the experiment, enabling benchmarking of build scenarios with customizable iterations and ABI changes. Generates a report based on the results.
 
 - **Inputs**:
   - `repository`: The GitHub repository where the experiment will run.
   - `variantA` and `variantB`: Branch names for the experiment.
   - `task`: The Gradle task to execute.
-  - `class`: Classes to apply ABI changes.
   - `iterations`: Number of iterations for each experiment run.
+  - `class`: Classes to apply ABI changes.      
   - `os_args`, `java_args`, `extra_build_args`, `extra_report_args`: Additional configuration options for OS, Java versions, build arguments, and report settings.
 
 ### Report
@@ -94,12 +94,14 @@ If `extra_report_args` defines `report_enabled:'true`, a report will be generate
 
 To use these workflows, ensure the following prerequisites are met:
 
-1. **GitHub Secrets**: Set up the required secrets in your GitHub repository settings:
-   - `DV_ACCESS_KEY`: API key for Develocity access.
-   - `DV_API_KEY`: API key used in report generation.
+1. Clone this repository
+
+2. If you are using Develocity to publish the builds, add the following repository secrects in Repository:
+   - `DV_ACCESS_KEY`: Access key for (Develocity)[https://docs.gradle.com/develocity/gradle-plugin/current/#authenticating] access.
    - `DV_URL`: URL of the Develocity server.
 
-2. **Repository Structure**: Ensure your repository includes the required files for each workflow to function, particularly any custom actions referenced (e.g., `.github/workflows/runner-seed`, `.github/workflows/runner-gradle-profiler`).
+3. If you want to use the CLI BuildExperimentResults, you need to add the API token access
+   - `DV_API_KEY`: (API access)[https://docs.gradle.com/develocity/api-manual/#access_control] key used in report generation.
 
 ## Usage
 
