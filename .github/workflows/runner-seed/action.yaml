@@ -22,7 +22,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
       with:
         repository: ${{ inputs.repository }}
         ref: ${{ inputs.variant }}
@@ -64,5 +64,5 @@ runs:
       shell: bash
       env:
         GRADLE_ENTERPRISE_ACCESS_KEY: ${{ inputs.api-key }}
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
             
